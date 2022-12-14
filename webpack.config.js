@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 
 const path = require("path");
@@ -17,7 +18,7 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "src/index.html",
+      template: "index.html",
     }),
 
     // Add your plugins here
