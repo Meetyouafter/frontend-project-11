@@ -1,0 +1,17 @@
+{
+  "en": {
+    "rss": {
+      "test_message": "This is a test message",
+      "input_required": "Enter the RSS",
+      "input_invalid": "Enter the correct RSS",
+      "rss_was_load_message": "The RSS already exist"
+    },
+    "interface": {
+      "title": "RSS agregator",
+      "description": "Let's start to read the RSS now! It is easy end beautiful.",
+      "button": "Add",
+      "input": "RSS link",
+      "example": "Example: https://ru.hexlet.io/lessons.rss"
+    }
+  }
+}

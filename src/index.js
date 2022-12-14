@@ -1,21 +1,19 @@
-import * as yup from 'yup';
 import { inputSchema, stateSchema } from './validation';
+import state from './state';
+import { enDictionary, ruDictionary } from './translate';
 import './style.css'
 
-const state = {
-  link: [],
-};
+console.log(enDictionary)
+console.log(ruDictionary)
+console.log(typeof ruDictionary)
 
 const inputEl = document.querySelector('#floatingInput');
 const divWithStatusEl = document.querySelector('.status');
-const btnEl = document.querySelector('.btn');
 const formEl = document.querySelector('.form');
 
 formEl.addEventListener('submit', async (e) => {
     e.preventDefault();
     let data = { link: inputEl.value };
-
-    const stateSchema = yup.mixed().notOneOf(state.link, 'RSS уже существует');
 
     try {
       await inputSchema.validate(data);
@@ -27,7 +25,6 @@ formEl.addEventListener('submit', async (e) => {
       inputEl.value = '';
       console.log(data.link)
       console.log(state)
-
     } catch (err) {
       divWithStatusEl.innerText = err.errors;
       divWithStatusEl.classList.add('is-invalid');
