@@ -1,13 +1,23 @@
 import * as yup from 'yup';
-import state from './state';
+import i18next from "i18next";
 
-yup.setLocale({
+const getLang = () => {
+  return window.state.language;
+}
+
+const getLinks = () => {
+  return window.state.link;
+}
+
+
+
+  yup.setLocale({
   mixed: {
-    required: 'Введите адрес RSS',
-    notOneOf: 'RSS уже существует',
+    required: 'rss.input_required',
+    notOneOf: 'rss.rss_was_load_message',
   },
   string: {
-    url: 'Введите корректный адрес RSS',
+    url: 'rss.input_invalid',
   }
 });
 
@@ -18,6 +28,6 @@ const inputSchema = yup.object().shape({
   .url()
 });
 
-const stateSchema = yup.mixed().notOneOf(state.link);
+const stateSchema = yup.mixed().notOneOf(getLinks());
 
-export { inputSchema, stateSchema };
+export { inputSchema, stateSchema, getLang, getLinks };

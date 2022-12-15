@@ -47,6 +47,7 @@
 
 .body {
   min-height: 100px;
+  display: flex;
   height: auto;
   align-items: center;
 }

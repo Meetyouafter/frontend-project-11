@@ -16,6 +16,9 @@ const config = {
     open: true,
     host: "localhost",
   },
+  node: {
+    global: true
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: "index.html",
@@ -37,7 +40,22 @@ const config = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
-      }
+      },
+      {
+        test: /\.js$/,
+        enforce: "pre",
+        use: ["source-map-loader"],
+      },
+      { 
+        test: /\.js$/, 
+        exclude: /node_modules/, 
+        use: { 
+          loader: "babel-loader", 
+          options: { 
+            presets: [ "@babel/preset-env", ] 
+          } 
+        } 
+      }, 
 
       // Add your rules for custom modules here
       // Learn more about loaders from https://webpack.js.org/loaders/

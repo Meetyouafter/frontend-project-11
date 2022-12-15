@@ -1,78 +1,64 @@
-import en from './dictionary/en.json'
-import ru from './dictionary/ru.json'
+import i18next from "i18next";
 
-const enData = JSON.stringify(en);
-const ruData = JSON.stringify(ru);
-
-const enDictionary = JSON.parse(enData);
-const ruDictionary = JSON.parse(ruData);
-
-export { enDictionary, ruDictionary };
-
-
-/*//import { i18n } from '@lingui/core';
-import { resolve, __dirname } from 'path';
-import { readFileSync } from 'fs';
-
-const filepath = './dictionary/en.json'
-const getFixturePath = resolve(__dirname, filepath);
-const enDictionary = readFileSync(getFixturePath(filepath, 'utf-8'));
-*/
-//const enDictionary = readFileSync(resolve(__dirname, './dictionary/en.json')).toString('utf8');
-//const ruDictionary = readFileSync(resolve(__dirname, './dictionary/ru.json')).toString('utf8');
-
-//const readFile = (filepath) => readFileSync(getFixturePath(filepath, 'utf-8'));
-
-/*
-
-function renderPost (results) {
-    const templateStr = fs.readFileSync(path.resolve(__dirname, './dictionary/en.json')).toString('utf8')
-    const template = Handlebars.compile(templateStr, { noEscape: true })
-    const view = Object.assign({
-      date: new Date().toISOString(),
-      versionSlug: slugify(results.version)
-    }, results)
-  
-    return Object.assign({
-      content: template(view)
-    }, results)
+i18next.init({
+  lng: window.state.language,
+  debug: true,
+  resources: {
+    en: {
+      translation: {
+        rss: {
+          input_required: "Enter the RSS",
+          input_invalid: "Enter the correct RSS",
+          rss_was_load_message: "The RSS already exist",
+          rss_done: "The RSS load is finished",
+        },
+        interface: {
+          title: "RSS agregator",
+          description: "Let's start to read the RSS now! It is easy end beautiful.",
+          button: "Add",
+          input: "RSS link",
+          example: "Example: https://ru.hexlet.io/lessons.rss"
+      }
+    }
+  },
+    ru: {
+      translation: {
+        rss: {
+          input_required: "Введите адрес RSS",
+          input_invalid: "Введите корректный адрес RSS",
+          rss_was_load_message: "RSS уже существует",
+          rss_done: "RSS успешно загружен",
+        },
+        interface: {
+          title: "RSS агрегатор",
+          description: "Начните читать RSS сегодня! Это легко, это красиво.",
+          button: "Добавить",
+          input: "Ссылка RSS",
+          example: "Пример: https://ru.hexlet.io/lessons.rss"
+        }
+      }
+    }
   }
+});
 
+const changeLanguage = (language, err) => {
+const title = document.querySelector('.title');
+title.innerText = i18next.t('interface.title',{ lng: language});
 
+const description = document.querySelector('.description');
+description.innerText = i18next.t('interface.description',{ lng: language});
 
+const example = document.querySelector('.example');
+example.innerText = i18next.t('interface.example',{ lng: language});
 
-setLanguage(language) {
-    i18next.init({
-      lng: language,
-      resources: require(`json!./${language}.json`)
-    });
-  
-    this.props.actions.changeLanguage(i18next);
-  }
+const btn = document.querySelector('.btn-primary');
+btn.innerText = i18next.t('interface.button',{ lng: language});
 
+const input = document.querySelector('label');
+input.innerText = i18next.t('interface.input',{ lng: language});
 
+const status = document.querySelector('.status');
+err === 'compleate' ? status.innerText = i18next.t('rss_done',{ lng: language}) : status.innerText = i18next.t(err,{ lng: language});
+};
 
-
-
-i18n.load('en', {
-    how: "How do you want your egg today?",
-    choice: "How to choose the egg"
-  });
-  i18n.load('it', {
-    how: "Come vuoi il tuo uovo oggi?",
-    choice: "Come scegliere l'uovo"
-  });
-  i18n.activate('en');
-  
-  // В компоненте:
-  const context = useLingui();
-  <div>{context.i18n._('how')}</div>
-
-  
-  // Переключение:
-  const context = useLingui();
-  context.i18.activate('it');
- */
-
-
- 
+export default changeLanguage;

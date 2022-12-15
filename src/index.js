@@ -1,11 +1,9 @@
-import { inputSchema, stateSchema } from './validation';
-import state from './state';
-import { enDictionary, ruDictionary } from './translate';
+import { inputSchema, stateSchema, getLang, getLinks } from './validation';
+import changeLanguage from './translate';
+import i18next from "i18next";
 import './style.css'
 
-console.log(enDictionary)
-console.log(ruDictionary)
-console.log(typeof ruDictionary)
+console.log(window.state)
 
 const inputEl = document.querySelector('#floatingInput');
 const divWithStatusEl = document.querySelector('.status');
@@ -14,22 +12,38 @@ const formEl = document.querySelector('.form');
 formEl.addEventListener('submit', async (e) => {
     e.preventDefault();
     let data = { link: inputEl.value };
+    getLinks()
 
     try {
       await inputSchema.validate(data);
       await stateSchema.validate(data.link);
-      divWithStatusEl.innerText = 'RSS успешно загружен';
-      state.link.push(data.link)
+      changeLanguage(window.state.language, 'compleate')
+      divWithStatusEl.innerText = i18next.t('rss.rss_done',{ lng: window.state.language});
+      window.state.link.push(data.link)
       divWithStatusEl.classList.remove('is-invalid');
       inputEl.classList.remove('is-invalid');
       inputEl.value = '';
-      console.log(data.link)
-      console.log(state)
     } catch (err) {
-      divWithStatusEl.innerText = err.errors;
+      divWithStatusEl.innerText = i18next.t(err.errors, { lng: window.state.language})
+      changeLanguage(window.state.language, err.errors)
       divWithStatusEl.classList.add('is-invalid');
       inputEl.classList.add('is-invalid');
-      console.log(state)
     }
 })
 
+const ButtonToEnLangEl = document.querySelector('.btn_enLang');
+const ButtonToRuLangEl = document.querySelector('.btn_ruLang');
+
+ButtonToEnLangEl.addEventListener('click', () => {
+  window.state.language = 'en'
+  changeLanguage(window.state.language)
+});
+
+ButtonToRuLangEl.addEventListener('click', () => {
+  window.state.language = 'ru'
+  changeLanguage(window.state.language)
+  getLang()
+
+  console.log(window.state)
+
+});
