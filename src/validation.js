@@ -1,15 +1,5 @@
 import * as yup from 'yup';
-import i18next from "i18next";
-
-const getLang = () => {
-  return window.state.language;
-}
-
-const getLinks = () => {
-  return window.state.link;
-}
-
-
+import watchedState from './state';
 
   yup.setLocale({
   mixed: {
@@ -22,12 +12,12 @@ const getLinks = () => {
 });
 
 const inputSchema = yup.object().shape({
-  link: yup
+  feeds: yup
   .string()
   .required()
   .url()
 });
 
-const stateSchema = yup.mixed().notOneOf(getLinks());
+const feedsSchema = yup.mixed().notOneOf(watchedState.feeds);
 
-export { inputSchema, stateSchema, getLang, getLinks };
+export { inputSchema, feedsSchema };

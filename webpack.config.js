@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-// Generated using webpack-cli https://github.com/webpack/webpack-cli
 
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -15,6 +14,11 @@ const config = {
   devServer: {
     open: true,
     host: "localhost",
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+    },
   },
   node: {
     global: true

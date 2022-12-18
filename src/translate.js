@@ -1,7 +1,8 @@
 import i18next from "i18next";
+import watchedState from "./state";
 
 i18next.init({
-  lng: window.state.language,
+  lng: watchedState.locale,
   debug: true,
   resources: {
     en: {
@@ -10,7 +11,7 @@ i18next.init({
           input_required: "Enter the RSS",
           input_invalid: "Enter the correct RSS",
           rss_was_load_message: "The RSS already exist",
-          rss_done: "The RSS load is finished",
+          rss_done: "The RSS load was succesful",
         },
         interface: {
           title: "RSS agregator",

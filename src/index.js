@@ -1,49 +1,64 @@
-import { inputSchema, stateSchema, getLang, getLinks } from './validation';
+import { inputSchema, feedsSchema } from './validation';
 import changeLanguage from './translate';
 import i18next from "i18next";
+import watchedState from './state';
 import './style.css'
+import getFeed from './getFeed';
+import axios from 'axios';
 
-console.log(window.state)
 
 const inputEl = document.querySelector('#floatingInput');
 const divWithStatusEl = document.querySelector('.status');
 const formEl = document.querySelector('.form');
 
 formEl.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    let data = { link: inputEl.value };
-    getLinks()
+  e.preventDefault();
+  let data = { feeds: inputEl.value };
+  try {
+    await inputSchema.validate(data);
+    await feedsSchema.validate(data.feeds);
+    divWithStatusEl.innerText = i18next.t('rss.rss_done',{ lng: watchedState.locale});
+    watchedState.feeds.push(data.feeds);
+    divWithStatusEl.classList.remove('is-invalid');
+    inputEl.classList.remove('is-invalid');
+    inputEl.value = '';
+    inputEl.focus();
 
-    try {
-      await inputSchema.validate(data);
-      await stateSchema.validate(data.link);
-      changeLanguage(window.state.language, 'compleate')
-      divWithStatusEl.innerText = i18next.t('rss.rss_done',{ lng: window.state.language});
-      window.state.link.push(data.link)
-      divWithStatusEl.classList.remove('is-invalid');
-      inputEl.classList.remove('is-invalid');
-      inputEl.value = '';
-    } catch (err) {
-      divWithStatusEl.innerText = i18next.t(err.errors, { lng: window.state.language})
-      changeLanguage(window.state.language, err.errors)
-      divWithStatusEl.classList.add('is-invalid');
-      inputEl.classList.add('is-invalid');
-    }
+
+/*
+    axios.get(data.feeds)
+    .then(function (response) {
+    response.header("Access-Control-Allow-Origin", "*")
+
+    // handle success
+    console.log(response);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+*/
+
+
+    getFeed(data.feeds)
+  } catch (err) {
+    divWithStatusEl.innerText = i18next.t(err.errors, { lng: watchedState.locale})
+    changeLanguage(watchedState.locale, err.errors)
+    divWithStatusEl.classList.add('is-invalid');
+    inputEl.classList.add('is-invalid');
+  }
 })
 
 const ButtonToEnLangEl = document.querySelector('.btn_enLang');
 const ButtonToRuLangEl = document.querySelector('.btn_ruLang');
 
 ButtonToEnLangEl.addEventListener('click', () => {
-  window.state.language = 'en'
-  changeLanguage(window.state.language)
+  watchedState.locale = 'en'
+  changeLanguage(watchedState.locale)
 });
 
 ButtonToRuLangEl.addEventListener('click', () => {
-  window.state.language = 'ru'
-  changeLanguage(window.state.language)
-  getLang()
-
-  console.log(window.state)
-
+  watchedState.locale = 'ru'
+  changeLanguage(watchedState.locale)
 });
+
