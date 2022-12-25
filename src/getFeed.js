@@ -1,59 +1,75 @@
-const parser = new DOMParser();
+import { state } from './state';
+
+const Parser = new DOMParser();
+
+const bodyEl = document.querySelector('.body');
+const feeds = [];
+
+const contentEl = document.createElement('div');
+contentEl.classList.add('col-8', 'content');
+
+const feedsEl = document.createElement('div');
+feedsEl.classList.add('col-4', 'feeds');
+
+const firstRss = '';
 
 const getFeed = (url) => {
   fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`)
-    .then(response => {
+    .then((response) => {
       if (response.ok) {
+        state.feeds.push(url);
         return response.json();
-      } 
-      const bodyEl = document.querySelector('.body');
+      }
       const h1El = document.createElement('h1');
-      h1El.innerText = "Что-то пошло не так"
-      bodyEl.prepend(h1El)
-      throw new Error('Network response was not ok.')
+      h1El.innerText = 'Что-то пошло не так';
+      bodyEl.prepend(h1El);
+      throw new Error('Network response was not ok.');
     })
-    .then(data => parser.parseFromString(data.contents, 'text/html'))
-    .then(content => {
-      const title = content.querySelectorAll('title');
-      const description = content.querySelectorAll('description');
-      const bodyEl = document.querySelector('.body');
-  
-      const titleArray = Array.from(title);
-      const descriptionArray = Array.from(description);
-  
-      const feeds = [];
-  
-      for (let i = 0; i < titleArray.length; i++) {
+    .then((data) => Parser.parseFromString(data.contents, 'text/html'))
+    .then((content) => {
+      console.log(content);
+      console.log(state);
+      state.contents.push(content);
+      const feedTitles = content.querySelectorAll('title');
+      const feedDescriptions = content.querySelectorAll('description');
+
+      const titlesArray = Array.from(feedTitles);
+      const descriptionsArray = Array.from(feedDescriptions);
+
+      for (let i = 0; i < titlesArray.length; i++) {
         feeds[i] = {
-          title: titleArray[i],
-          description: descriptionArray[i],
+          title: titlesArray[i],
+          description: descriptionsArray[i],
           index: i,
-        }
+        };
       }
 
-    console.log(feeds)
+      console.log(feeds);
 
-    return feeds.map((feed) => {
-      console.log(feed)
-      const divEl = document.createElement('div');
-      divEl.classList.add('content');
+      for (let i = 0; i < feeds.length; i += 1) {
+        const boxEl = document.createElement('div');
+        const h1El = document.createElement('h1');
+        const pEl = document.createElement('p');
+        const h2El = document.createElement('h2');
+        const h3El = document.createElement('h3');
 
-      const h1El = document.createElement('h1');
-      const pEl = document.createElement('p');
+        if (i === 0) {
+          h2El.innerHTML = feeds[i].title.innerHTML;
+          h3El.innerHTML = feeds[i].description.innerHTML;
+          feedsEl.prepend(h2El);
+          feedsEl.append(h3El);
+          bodyEl.append(feedsEl);
+        } else {
+          h1El.innerHTML = feeds[i].title.innerHTML;
+          pEl.innerHTML = feeds[i].description.innerHTML;
 
-      h1El.innerHTML = feed.title.innerHTML;
-      pEl.innerHTML = feed.description.innerHTML;
+          boxEl.append(h1El);
+          boxEl.append(pEl);
+          contentEl.prepend(boxEl);
+          bodyEl.prepend(contentEl);
+        }
+      }
+    });
+};
 
-      divEl.prepend(h1El)
-      divEl.append(pEl)
-
-      bodyEl.prepend(divEl)
-
-    })
-    .catch = (error) => {
-      console.log('errrrrrrr', error)
-    }
-  })
-}
-
-export default getFeed
+export default getFeed;

@@ -1,23 +1,25 @@
 import * as yup from 'yup';
-import watchedState from './state';
+import { watchedState } from './state';
 
-  yup.setLocale({
+yup.setLocale({
   mixed: {
     required: 'rss.input_required',
     notOneOf: 'rss.rss_was_load_message',
   },
   string: {
     url: 'rss.input_invalid',
-  }
+  },
 });
 
 const inputSchema = yup.object().shape({
   feeds: yup
-  .string()
-  .required()
-  .url()
+    .string()
+    .required()
+    .url(),
 });
 
-const feedsSchema = yup.mixed().notOneOf(watchedState.feeds);
+// const feedsSchema = yup.mixed().notOneOf(watchedState.feeds);
 
-export { inputSchema, feedsSchema };
+// const feedsSchema = async () => await yup.string().notOneOf(watchedState.feeds).validate(data.feeds);
+
+export { inputSchema };

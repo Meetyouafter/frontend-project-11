@@ -50,6 +50,13 @@
   display: flex;
   height: auto;
   align-items: center;
+  justify-content: space-between;
+}
+
+.content {
+}
+
+.feed {
 }
 
 .footer {
