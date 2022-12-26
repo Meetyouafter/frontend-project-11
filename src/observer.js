@@ -7,10 +7,11 @@ const id = (feeds, content) => setTimeout(() => {
 }, 5000);
 
 const observer = (feeds, content) => {
-  const fn = feeds.map((feed, index) => {
+  return feeds.map((feed, index) => {
     fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(feed)}`)
       .then((response) => {
         if (response.ok) {
+          id(feeds, content)
           return response.json();
         }
         clearTimeout(id);
@@ -24,9 +25,15 @@ const observer = (feeds, content) => {
           getFeed(feed);
         }
       })
-      .then(id(feeds, content));
   });
-  return fn;
 };
-
+///
+/*
+const observer = () => {
+  return feeds.map(feed => {
+    const link = `${feed}/feed?unit=second&interval=30`;
+  })
+  return null
+}
+*/
 export default observer;
