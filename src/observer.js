@@ -1,21 +1,21 @@
+/* eslint-disable no-console */
 import getFeed from './getFeed';
 
 const Parser = new DOMParser();
+const callback = (feeds, content) => observer(feeds, content);
 
-const id = (feeds, content) => setTimeout(() => {
-  observer(feeds, content);
-}, 5000);
+const id = setTimeout(callback, 5000);
 
-const observer = (feeds, content) => {
-  return feeds.map((feed, index) => {
+const observer = (feeds, content) =>
+  feeds.map((feed, index) => {
     fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(feed)}`)
       .then((response) => {
         if (response.ok) {
-          id(feeds, content)
           return response.json();
         }
         clearTimeout(id);
         console.log('oops');
+        return null;
       })
       .then((data) => {
         Parser.parseFromString(data.contents, 'text/html');
@@ -24,16 +24,8 @@ const observer = (feeds, content) => {
         if (newContent !== content[index]) {
           getFeed(feed);
         }
-      })
+      });
+    return id;
   });
-};
-///
-/*
-const observer = () => {
-  return feeds.map(feed => {
-    const link = `${feed}/feed?unit=second&interval=30`;
-  })
-  return null
-}
-*/
+
 export default observer;

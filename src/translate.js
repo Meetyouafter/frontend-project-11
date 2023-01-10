@@ -59,7 +59,15 @@ const changeLanguage = (language, err) => {
   input.innerText = i18next.t('interface.input', { lng: language });
 
   const status = document.querySelector('.status');
-  err === 'compleate' ? status.innerText = i18next.t('rss_done', { lng: language }) : status.innerText = i18next.t(err, { lng: language });
+  const getStatus = () => {
+    if (err === 'complete') {
+      status.innerText = i18next.t('rss_done', { lng: language });
+    } else {
+      status.innerText = i18next.t(err, { lng: language });
+    }
+  };
+
+  getStatus();
 };
 
 export default changeLanguage;

@@ -14,29 +14,25 @@
 }
 
 .title {
-  font-size: 64px;
+  font-size: 48px;
   color: white;
-  padding-top: 3%;
+  padding-top: 2%;
 }
 
 .description {
-  font-size: 32px;
+  font-size: 24px;
   color: white;
-}
-
-.form-control {
-  height: 150px;
 }
 
 .example {
   color: rgb(192, 187, 187);
-  padding-top: 20px;
-  font-size: 24px;
+  padding-top: 1%;
+  font-size: 18px;
 }
 
 .status {
   color: rgb(14, 177, 76);
-  font-size: 24px;
+  font-size: 18px;
 }
 
 .btn {
@@ -49,14 +45,34 @@
   min-height: 100px;
   display: flex;
   height: auto;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
 }
 
-.content {
+.content a {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.feeds h2 {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.feeds h3 {
+  font-size: 14px;
+  text-align: center;
 }
 
 .feed {
+  font-size: 14px;
+}
+
+.primary_title {
+  font-size: 24px;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 20px;
 }
 
 .footer {

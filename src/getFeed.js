@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { state } from './state';
 
 const Parser = new DOMParser();
@@ -7,11 +8,17 @@ const feeds = [];
 
 const contentEl = document.createElement('div');
 contentEl.classList.add('col-8', 'content');
+const contentPrimaryTitleEL = document.createElement('p');
+contentPrimaryTitleEL.classList.add('primary_title');
+contentPrimaryTitleEL.innerText = 'Посты';
+contentEl.append(contentPrimaryTitleEL);
 
 const feedsEl = document.createElement('div');
 feedsEl.classList.add('col-4', 'feeds');
-
-const firstRss = '';
+const feedsPrimaryTitleEL = document.createElement('p');
+feedsPrimaryTitleEL.classList.add('primary_title');
+feedsPrimaryTitleEL.innerText = 'Фиды';
+feedsEl.append(feedsPrimaryTitleEL);
 
 const getFeed = (url) => {
   fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`)
@@ -27,45 +34,117 @@ const getFeed = (url) => {
     })
     .then((data) => Parser.parseFromString(data.contents, 'text/html'))
     .then((content) => {
+      window.content = content;
       console.log(content);
       console.log(state);
+
       state.contents.push(content);
+      const item = content.querySelectorAll('item');
       const feedTitles = content.querySelectorAll('title');
       const feedDescriptions = content.querySelectorAll('description');
+      const feedLink = content.querySelectorAll('link');
 
+      const itemsArray = Array.from(item);
       const titlesArray = Array.from(feedTitles);
       const descriptionsArray = Array.from(feedDescriptions);
+      const linksArray = Array.from(feedLink);
 
-      for (let i = 0; i < titlesArray.length; i++) {
+     //   const divs = [...content.querySelectorAll('div')];
+     let result = []
+     const textNodes = itemsArray.map((el) => {
+           const nodes = [...el.childNodes]
+            .filter(el => el instanceof Text)
+            .filter(el => el.textContent.trim() !== '');
+//            textNodes.forEach(el => {
+ //             const p = document.createElement('p')
+ //             p.textContent = el.textContent;
+ //             el.replaceWith(p)
+ //           })
+ result.push(nodes[0].data)
+ console.log(typeof textNodes)
+ console.log(nodes, 'nodes')
+ console.log(nodes[0].data, 'nodes')
+ el = 44
+ //return el
+
+        })
+
+     //   const text2 = textNodes.map(el => el[0].data)
+       // console.log(text2)
+
+       result.unshift('empty');
+        console.log(textNodes, 'textNodes')
+        console.log(result, 'result')
+
+
+      //    const texts = feedLink.forEach(el => el.node === 'text')
+      //  console.log(texts, 'texts')
+
+      //    const textEl = linksArray.filter(el => el === 'text')
+      //  console.log(linksArray, 'linksArray')
+      //   console.log(textEl, 'textEl')
+
+
+
+      for (let i = 0; i < titlesArray.length; i += 1) {
         feeds[i] = {
           title: titlesArray[i],
           description: descriptionsArray[i],
+          link: result[i],
           index: i,
         };
       }
-
-      console.log(feeds);
+      console.log(feeds, 'feeds');
 
       for (let i = 0; i < feeds.length; i += 1) {
         const boxEl = document.createElement('div');
-        const h1El = document.createElement('h1');
         const pEl = document.createElement('p');
         const h2El = document.createElement('h2');
         const h3El = document.createElement('h3');
+        const linkEl = document.createElement('a');
+
+        linkEl.setAttribute("target", "_blank")
 
         if (i === 0) {
           h2El.innerHTML = feeds[i].title.innerHTML;
           h3El.innerHTML = feeds[i].description.innerHTML;
-          feedsEl.prepend(h2El);
+          feedsEl.append(h2El);
           feedsEl.append(h3El);
           bodyEl.append(feedsEl);
         } else {
-          h1El.innerHTML = feeds[i].title.innerHTML;
-          pEl.innerHTML = feeds[i].description.innerHTML;
+          //    pEl.innerHTML = feeds[i].description.innerHTML;
+          linkEl.innerText = feeds[i].title.innerText;
+          linkEl.href = feeds[i].link;
 
-          boxEl.append(h1El);
-          boxEl.append(pEl);
-          contentEl.prepend(boxEl);
+          //    boxEl.append(pEl);
+          contentEl.append(boxEl);
+          boxEl.append(linkEl);
+          boxEl.append(<div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+  Launch demo modal
+</button>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+          )
           bodyEl.prepend(contentEl);
         }
       }

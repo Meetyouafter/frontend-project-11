@@ -18,8 +18,4 @@ const inputSchema = yup.object().shape({
     .url(),
 });
 
-// const feedsSchema = yup.mixed().notOneOf(watchedState.feeds);
-
-// const feedsSchema = async () => await yup.string().notOneOf(watchedState.feeds).validate(data.feeds);
-
 export { inputSchema };

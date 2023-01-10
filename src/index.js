@@ -1,18 +1,15 @@
 import i18next from 'i18next';
+import * as yup from 'yup';
 import { inputSchema } from './validation';
 import changeLanguage from './translate';
-import { state, watchedState } from './state';
+import { watchedState } from './state';
 import './style.css';
 import getFeed from './getFeed';
-import axios from 'axios';
-import * as yup from 'yup';
-import mutationObserver from './observer';
 import observer from './observer';
 
 const inputEl = document.querySelector('#floatingInput');
 const divWithStatusEl = document.querySelector('.status');
 const formEl = document.querySelector('.form');
-const bodyEl = document.querySelector('.body');
 
 formEl.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -27,21 +24,9 @@ formEl.addEventListener('submit', async (e) => {
     inputEl.value = '';
     inputEl.focus();
 
-    /*
-    axios.get(data.feeds)
-    .then(function (response) {
-    response.header("Access-Control-Allow-Origin", "*")
+    const newFeeds = data.feeds.length > 0 ? new Set(data.feeds) : data.feeds;
 
-    // handle success
-    console.log(response);
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  })
-*/
-
-    getFeed(data.feeds);
+    getFeed(newFeeds);
     observer(watchedState.feeds, watchedState.contents);
   } catch (err) {
     divWithStatusEl.innerText = i18next.t(err.errors, { lng: watchedState.locale });
@@ -62,18 +47,4 @@ ButtonToEnLangEl.addEventListener('click', () => {
 ButtonToRuLangEl.addEventListener('click', () => {
   watchedState.locale = 'ru';
   changeLanguage(watchedState.locale);
-});
-
-const ButtonTest = document.querySelector('.test');
-ButtonTest.addEventListener('click', () => {
-  const contentEl = document.createElement('div');
-  contentEl.classList.add('col-8', 'content');
-  contentEl.innerText = 'Content';
-
-  const feedsEl = document.createElement('div');
-  feedsEl.classList.add('col-4', 'feeds');
-  feedsEl.innerText = 'Feeds';
-
-  bodyEl.prepend(contentEl);
-  bodyEl.append(feedsEl);
 });
