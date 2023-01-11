@@ -13,6 +13,11 @@
   align-items: center;
 }
 
+#floatingInput {
+  width: 50%;
+  display: inline-block;
+}
+
 .title {
   font-size: 48px;
   color: white;
@@ -22,6 +27,7 @@
 .description {
   font-size: 24px;
   color: white;
+  padding-bottom: 2%;
 }
 
 .example {
@@ -35,14 +41,13 @@
   font-size: 18px;
 }
 
-.btn {
+.add_rss_btn {
   height: 60px;
   width: 140px;
   font-size: 24px;
 }
 
 .body {
-  min-height: 100px;
   display: flex;
   height: auto;
   align-items: flex-start;
@@ -51,6 +56,18 @@
 .content a {
   font-size: 18px;
   font-weight: 600;
+}
+
+.postBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 5px;
+}
+
+.modal-footer a {
+  font-weight: normal;
+    font-size: 16px;
 }
 
 .feeds h2 {
@@ -79,9 +96,17 @@
   justify-content: center;
   align-items: center;
   height: 50px;
-  font-size: 24px;
+  font-size: 18px;
   border: 1px solid rgb(172, 146, 146);
-  position: relative;
+  position: static;
+}
+
+.footer_items {
+  display: flex;
+  justify-content: flex-end;
+  align-content: center;
+  align-items: center;
+  column-gap: 10px;
 }
 
 .is-invalid {

@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+import modalButton from './modalWindow/modalButton';
+import modalWindow from './modalWindow/modalWindow';
 import { state } from './state';
 
 const Parser = new DOMParser();
@@ -49,33 +51,31 @@ const getFeed = (url) => {
       const descriptionsArray = Array.from(feedDescriptions);
       const linksArray = Array.from(feedLink);
 
-     //   const divs = [...content.querySelectorAll('div')];
-     let result = []
-     const textNodes = itemsArray.map((el) => {
-           const nodes = [...el.childNodes]
-            .filter(el => el instanceof Text)
-            .filter(el => el.textContent.trim() !== '');
-//            textNodes.forEach(el => {
- //             const p = document.createElement('p')
- //             p.textContent = el.textContent;
- //             el.replaceWith(p)
- //           })
- result.push(nodes[0].data)
- console.log(typeof textNodes)
- console.log(nodes, 'nodes')
- console.log(nodes[0].data, 'nodes')
- el = 44
- //return el
+      //   const divs = [...content.querySelectorAll('div')];
+      const result = [];
+      const textNodes = itemsArray.map((el) => {
+        const nodes = [...el.childNodes]
+          .filter((el) => el instanceof Text)
+          .filter((el) => el.textContent.trim() !== '');
+        //            textNodes.forEach(el => {
+        //             const p = document.createElement('p')
+        //             p.textContent = el.textContent;
+        //             el.replaceWith(p)
+        //           })
+        result.push(nodes[0].data);
+        console.log(typeof textNodes);
+        console.log(nodes, 'nodes');
+        console.log(nodes[0].data, 'nodes');
+        el = 44;
+        // return el
+      });
 
-        })
+      //   const text2 = textNodes.map(el => el[0].data)
+      // console.log(text2)
 
-     //   const text2 = textNodes.map(el => el[0].data)
-       // console.log(text2)
-
-       result.unshift('empty');
-        console.log(textNodes, 'textNodes')
-        console.log(result, 'result')
-
+      result.unshift('empty');
+      console.log(textNodes, 'textNodes');
+      console.log(result, 'result');
 
       //    const texts = feedLink.forEach(el => el.node === 'text')
       //  console.log(texts, 'texts')
@@ -83,8 +83,6 @@ const getFeed = (url) => {
       //    const textEl = linksArray.filter(el => el === 'text')
       //  console.log(linksArray, 'linksArray')
       //   console.log(textEl, 'textEl')
-
-
 
       for (let i = 0; i < titlesArray.length; i += 1) {
         feeds[i] = {
@@ -103,7 +101,8 @@ const getFeed = (url) => {
         const h3El = document.createElement('h3');
         const linkEl = document.createElement('a');
 
-        linkEl.setAttribute("target", "_blank")
+        linkEl.setAttribute('target', '_blank');
+        boxEl.classList.add('postBox');
 
         if (i === 0) {
           h2El.innerHTML = feeds[i].title.innerHTML;
@@ -119,32 +118,8 @@ const getFeed = (url) => {
           //    boxEl.append(pEl);
           contentEl.append(boxEl);
           boxEl.append(linkEl);
-          boxEl.append(<div>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-  Launch demo modal
-</button>
-
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-          )
+          boxEl.append(modalButton(`postModal${i}`));
+          boxEl.append(modalWindow(`postModal${i}`, feeds[i].title.innerHTML, feeds[i].description.innerHTML, feeds[i].link));
           bodyEl.prepend(contentEl);
         }
       }

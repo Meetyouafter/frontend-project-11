@@ -19,6 +19,7 @@ i18next.init({
           button: 'Add',
           input: 'RSS link',
           example: 'Example: https://ru.hexlet.io/lessons.rss',
+          choiseLang: 'Choise language',
         },
       },
     },
@@ -36,6 +37,7 @@ i18next.init({
           button: 'Добавить',
           input: 'Ссылка RSS',
           example: 'Пример: https://ru.hexlet.io/lessons.rss',
+          choiseLang: 'Выбор языка',
         },
       },
     },
@@ -57,6 +59,9 @@ const changeLanguage = (language, err) => {
 
   const input = document.querySelector('label');
   input.innerText = i18next.t('interface.input', { lng: language });
+
+  const languageChoise = document.querySelector('.language');
+  languageChoise.innerText = i18next.t('interface.choiseLang', { lng: language });
 
   const status = document.querySelector('.status');
   const getStatus = () => {

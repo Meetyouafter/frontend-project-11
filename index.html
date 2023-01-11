@@ -1,56 +1,114 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RSS агрегатор</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Document</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://getbootstrap.com/docs/5.3/assets/css/docs.css"
+      rel="stylesheet"
+    />
+    <title>RSS agregator</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="src/modalWindow.js"></script>
+    <script defer src="src/modal.js"></script>
   </head>
-<body>
-  <div class="container-fluid">
-  
-    <div class="row header">
-      <div class="col title">RSS агрегатор</div>
-    </div>
+  <body>
+    <div class="container-fluid" id="container-fluid">
+      <div class="row header">
+        <div class="col title">RSS агрегатор</div>
+      </div>
+      <div class="row header">
+        <div class="col description">
+          Начните читать RSS сегодня! Это легко, это красиво.
+        </div>
+      </div>
+      <div class="row header">
+        <div class="col">
+          <form class="form">
+            <div class="form-floating">
+              <input
+                type="rss"
+                class="form-control"
+                id="floatingInput"
+                placeholder="Ссылка RSS"
+              />
+              <label for="floatingInput">Ссылка RSS</label>
+              <button type="submit" class="btn btn-primary add_rss_btn">
+                Добавить
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="row header status">
+        <div class="col"></div>
+      </div>
+      <div class="row header example">
+        <div class="col">Пример: https://ru.hexlet.io/lessons.rss</div>
+        <div>https://lorem-rss.hexlet.app/feed?unit=second&interval=5</div>
+      </div>
+      <div class="row body"></div>
+      <div class="row footer">
+        <div class=".col footer_items">
+          <span class="language">Выбор языка</span>
+        <button type="button" class="btn btn-outline-info btn_enLang">
+          en
+        </button>
+        <button type="button" class="btn btn-outline-info btn_ruLang">
+          ru
+        </button>
+        <button
+          class="btn btn-danger"
+          data-bs-toggle="modal"
+          data-bs-target="#modalWindow"
+        >
+          showModal
+        </button>
+      </div>
 
-    <div class="row header">
-      <div class="col description">Начните читать RSS сегодня! Это легко, это красиво.</div>
-    </div>
+        <div
+          class="modal fade"
+          id="modalWindow"
+          tabindex="-1"
+          aria-labelledby="modalWindowLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalWindowLabel">title</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
 
-    <div class="row header">
-      <div class="col">
-        <form class="form">
-          <div class="form-floating">
-            <input type="rss" class="form-control" id="floatingInput" placeholder="Ссылка RSS">
-            <label for="floatingInput">Ссылка RSS</label>
+              <div class="modal-body">
+                <p>description</p>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary">
+                  Читать полностью
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Закрыть
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col">
-          <button type="submit" class="btn btn-primary">Добавить</button>
-        </form>
       </div>
     </div>
-
-    <div class="row header status">
-      <div class="col"></div>
-    </div>
-
-    <div class="row header example">
-      <div class="col">Пример: https://ru.hexlet.io/lessons.rss</div>
-      <div>https://lorem-rss.hexlet.app/feed?unit=second&interval=5</div>
-    </div>
-
-    <div class="row body">
-    </div>
-
-    <div class="row footer">
-      <div class=".col">created by Levis</div>
-      <button class="btn btn_enLang">en</button>
-      <button class="btn btn_ruLang">ru</button>
-    </div>
-  </div>    
-</body>
+  </body>
 </html>
