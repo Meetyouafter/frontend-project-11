@@ -1,8 +1,8 @@
 import i18next from 'i18next';
 import * as yup from 'yup';
 import inputSchema from './validation';
-import changeLanguage from './translate';
-import { watchedState } from './state';
+import changeLanguage from './translate/translate';
+import watchedState from './state';
 import './style.css';
 import getFeed from './getFeed';
 import observer from './observer';
@@ -24,9 +24,7 @@ formEl.addEventListener('submit', async (e) => {
     inputEl.value = '';
     inputEl.focus();
 
-    const newFeeds = data.feeds.length > 0 ? new Set(data.feeds) : data.feeds;
-
-    getFeed(newFeeds);
+    getFeed(data.feeds);
     observer(watchedState.feeds, watchedState.contents);
   } catch (err) {
     divWithStatusEl.innerText = i18next.t(err.errors, { lng: watchedState.locale });
@@ -34,17 +32,4 @@ formEl.addEventListener('submit', async (e) => {
     divWithStatusEl.classList.add('is-invalid');
     inputEl.classList.add('is-invalid');
   }
-});
-
-const ButtonToEnLangEl = document.querySelector('.btn_enLang');
-const ButtonToRuLangEl = document.querySelector('.btn_ruLang');
-
-ButtonToEnLangEl.addEventListener('click', () => {
-  watchedState.locale = 'en';
-  changeLanguage(watchedState.locale);
-});
-
-ButtonToRuLangEl.addEventListener('click', () => {
-  watchedState.locale = 'ru';
-  changeLanguage(watchedState.locale);
 });

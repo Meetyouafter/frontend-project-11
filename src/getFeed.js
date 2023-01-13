@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import modalButton from './modalWindow/modalButton';
 import modalWindow from './modalWindow/modalWindow';
-import { state } from './state';
+import watchedState from './state';
 
 const Parser = new DOMParser();
 
@@ -22,13 +22,11 @@ feedsPrimaryTitleEL.classList.add('primary_title');
 feedsPrimaryTitleEL.innerText = 'Фиды';
 feedsEl.append(feedsPrimaryTitleEL);
 
-
-
 const getFeed = (url) => {
   fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`)
     .then((response) => {
       if (response.ok) {
-        state.feeds.push(url);
+        watchedState.feeds.push(url);
         return response.json();
       }
       const h1El = document.createElement('h1');
@@ -39,65 +37,37 @@ const getFeed = (url) => {
     .then((data) => Parser.parseFromString(data.contents, 'text/html'))
     .then((content) => {
       console.log('content', content);
-      console.log('state', state);
+      console.log('state', watchedState);
 
-      state.contents.push(content);
+      watchedState.contents.push(content);
       const item = content.querySelectorAll('item');
       const feedTitles = content.querySelectorAll('title');
       const feedDescriptions = content.querySelectorAll('description');
-      const feedLink = content.querySelectorAll('link');
 
       const itemsArray = Array.from(item);
       const titlesArray = Array.from(feedTitles);
       const descriptionsArray = Array.from(feedDescriptions);
-      const linksArray = Array.from(feedLink);
 
-      //   const divs = [...content.querySelectorAll('div')];
-      const result = [];
-      const textNodes = itemsArray.map((el) => {
+      const links = [];
+      itemsArray.map((el) => {
         const nodes = [...el.childNodes]
-          .filter((el) => el instanceof Text)
-          .filter((el) => el.textContent.trim() !== '');
-        //            textNodes.forEach(el => {
-        //             const p = document.createElement('p')
-        //             p.textContent = el.textContent;
-        //             el.replaceWith(p)
-        //           })
-        result.push(nodes[0].data);
-        console.log(typeof textNodes);
-        console.log(nodes, 'nodes');
-        console.log(nodes[0].data, 'nodes');
-        el = 44;
-        // return el
+          .filter((el1) => el1 instanceof Text)
+          .filter((el2) => el2.textContent.trim() !== '');
+        links.push(nodes[0].data);
       });
-
-      //   const text2 = textNodes.map(el => el[0].data)
-      // console.log(text2)
-
-      result.unshift('empty');
-      console.log(textNodes, 'textNodes');
-      console.log(result, 'result');
-
-      //    const texts = feedLink.forEach(el => el.node === 'text')
-      //  console.log(texts, 'texts')
-
-      //    const textEl = linksArray.filter(el => el === 'text')
-      //  console.log(linksArray, 'linksArray')
-      //   console.log(textEl, 'textEl')
+      links.unshift('empty link');
 
       for (let i = 0; i < titlesArray.length; i += 1) {
         feeds[i] = {
           title: titlesArray[i],
           description: descriptionsArray[i],
-          link: result[i],
+          link: links[i],
           index: i,
         };
       }
-      console.log(feeds, 'feeds');
 
       for (let i = 0; i < feeds.length; i += 1) {
         const boxEl = document.createElement('div');
-        const pEl = document.createElement('p');
         const h2El = document.createElement('h2');
         const h3El = document.createElement('h3');
         const linkEl = document.createElement('a');
@@ -116,24 +86,22 @@ const getFeed = (url) => {
           linkEl.innerText = feeds[i].title.innerText;
           linkEl.href = feeds[i].link;
 
-          state.posts.push(feeds[i].title.innerText);
-          state.uiState.posts.push({ title: feeds[i].title.innerText, readed: false });
+          watchedState.posts.push(feeds[i].title.innerText);
+          watchedState.uiState.posts.push({ title: feeds[i].title.innerText, readed: false });
 
           const readPost = (el) => {
-            for (let post of state.uiState.posts) {
+            for (const post of watchedState.uiState.posts) {
               if (post.title === el.text) {
-                post.readed = true
-                el.classList.remove('fw-bold')
-                el.classList.add('fw-normal')
+                post.readed = true;
+                el.classList.remove('fw-bold');
+                el.classList.add('fw-normal');
               }
             }
-            console.log('state', state);
+            console.log('state', watchedState);
           };
 
           linkEl.addEventListener('click', () => readPost(linkEl));
 
-
-          //    boxEl.append(pEl);
           contentEl.append(boxEl);
           boxEl.append(linkEl);
           boxEl.append(modalButton(`postModal${i}`));

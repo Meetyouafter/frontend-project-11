@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import { watchedState } from './state';
+import watchedState from '../state';
 
 i18next.init({
   lng: watchedState.locale,
@@ -64,6 +64,7 @@ const changeLanguage = (language, err) => {
   languageChoise.innerText = i18next.t('interface.choiseLang', { lng: language });
 
   const status = document.querySelector('.status');
+
   const getStatus = () => {
     if (err === 'complete') {
       status.innerText = i18next.t('rss_done', { lng: language });

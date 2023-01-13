@@ -19,4 +19,4 @@ const watchedState = onChange(state, function (path, value, previousValue) {
   console.log('previousValue:', previousValue);
 });
 
-export { state, watchedState };
+export default watchedState;

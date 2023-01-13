@@ -1,4 +1,4 @@
-const modalWindow = (modalId = 0, modalTitle = 0, modalDescription = 0, modalLink = 0) => {
+const modalWindow = (modalId, modalTitle, modalDescription, modalLink) => {
   const modalWrap = document.createElement('div');
   modalWrap.classList.add('modal', 'fade');
   modalWrap.setAttribute('id', `${modalId}`);
@@ -18,11 +18,9 @@ const modalWindow = (modalId = 0, modalTitle = 0, modalDescription = 0, modalLin
           aria-label="Close"
         ></button>
       </div>
-
       <div class="modal-body">
         <p>${modalDescription}</p>
       </div>
-
       <div class="modal-footer">
         <a href="${modalLink}" class="btn btn-primary" role="button" aria-disabled="false" target="_blank">Читать полностью</a>
         <button
