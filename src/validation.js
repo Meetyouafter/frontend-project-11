@@ -1,5 +1,4 @@
 import * as yup from 'yup';
-import { watchedState } from './state';
 
 yup.setLocale({
   mixed: {
@@ -18,4 +17,4 @@ const inputSchema = yup.object().shape({
     .url(),
 });
 
-export { inputSchema };
+export default inputSchema;

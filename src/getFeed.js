@@ -22,6 +22,8 @@ feedsPrimaryTitleEL.classList.add('primary_title');
 feedsPrimaryTitleEL.innerText = 'Фиды';
 feedsEl.append(feedsPrimaryTitleEL);
 
+
+
 const getFeed = (url) => {
   fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`)
     .then((response) => {
@@ -36,9 +38,8 @@ const getFeed = (url) => {
     })
     .then((data) => Parser.parseFromString(data.contents, 'text/html'))
     .then((content) => {
-      window.content = content;
-      console.log(content);
-      console.log(state);
+      console.log('content', content);
+      console.log('state', state);
 
       state.contents.push(content);
       const item = content.querySelectorAll('item');
@@ -103,6 +104,7 @@ const getFeed = (url) => {
 
         linkEl.setAttribute('target', '_blank');
         boxEl.classList.add('postBox');
+        linkEl.classList.add('fw-bold');
 
         if (i === 0) {
           h2El.innerHTML = feeds[i].title.innerHTML;
@@ -111,9 +113,25 @@ const getFeed = (url) => {
           feedsEl.append(h3El);
           bodyEl.append(feedsEl);
         } else {
-          //    pEl.innerHTML = feeds[i].description.innerHTML;
           linkEl.innerText = feeds[i].title.innerText;
           linkEl.href = feeds[i].link;
+
+          state.posts.push(feeds[i].title.innerText);
+          state.uiState.posts.push({ title: feeds[i].title.innerText, readed: false });
+
+          const readPost = (el) => {
+            for (let post of state.uiState.posts) {
+              if (post.title === el.text) {
+                post.readed = true
+                el.classList.remove('fw-bold')
+                el.classList.add('fw-normal')
+              }
+            }
+            console.log('state', state);
+          };
+
+          linkEl.addEventListener('click', () => readPost(linkEl));
+
 
           //    boxEl.append(pEl);
           contentEl.append(boxEl);

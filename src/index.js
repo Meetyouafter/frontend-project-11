@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import * as yup from 'yup';
-import { inputSchema } from './validation';
+import inputSchema from './validation';
 import changeLanguage from './translate';
 import { watchedState } from './state';
 import './style.css';

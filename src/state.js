@@ -6,6 +6,10 @@ const state = {
   feeds: [],
   locale: 'ru',
   contents: [],
+  posts: [],
+  uiState: {
+    posts: [],
+  },
 };
 
 const watchedState = onChange(state, function (path, value, previousValue) {
