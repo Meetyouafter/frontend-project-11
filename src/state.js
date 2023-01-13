@@ -13,10 +13,7 @@ const state = {
 };
 
 const watchedState = onChange(state, function (path, value, previousValue) {
-  console.log('this:', this);
-  console.log('path:', path);
-  console.log('value:', value);
-  console.log('previousValue:', previousValue);
+  console.log('watchedState', this, path, value, previousValue);
 });
 
 export default watchedState;

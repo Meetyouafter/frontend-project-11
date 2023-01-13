@@ -1,15 +1,15 @@
-import { watchedState } from '../state';
+import watchedState from '../state';
 import changeLanguage from './translate';
 
-const ButtonToEnLangEl = document.querySelector('.btn_enLang');
-const ButtonToRuLangEl = document.querySelector('.btn_ruLang');
+const buttonToEnLangEl = document.querySelector('.btn_enLang');
+const buttonToRuLangEl = document.querySelector('.btn_ruLang');
 
-ButtonToEnLangEl.addEventListener('click', () => {
+buttonToEnLangEl.addEventListener('click', () => {
   watchedState.locale = 'en';
   changeLanguage(watchedState.locale);
 });
 
-ButtonToRuLangEl.addEventListener('click', () => {
+buttonToRuLangEl.addEventListener('click', () => {
   watchedState.locale = 'ru';
   changeLanguage(watchedState.locale);
 });

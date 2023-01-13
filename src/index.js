@@ -1,11 +1,10 @@
 import i18next from 'i18next';
-import * as yup from 'yup';
-import inputSchema from './validation';
+import { inputSchema, repeatSchema } from './validation';
 import changeLanguage from './translate/translate';
 import watchedState from './state';
-import './style.css';
 import getFeed from './getFeed';
 import observer from './observer';
+import './style.css';
 
 const inputEl = document.querySelector('#floatingInput');
 const divWithStatusEl = document.querySelector('.status');
@@ -16,16 +15,18 @@ formEl.addEventListener('submit', async (e) => {
   const data = { feeds: inputEl.value };
   try {
     await inputSchema.validate(data);
-    await yup.mixed().notOneOf(watchedState.feeds).validate(data.feeds);
+    await repeatSchema(watchedState.feeds).validate(data.feeds);
+
     divWithStatusEl.innerText = i18next.t('rss.rss_done', { lng: watchedState.locale });
-    watchedState.feeds.push(data.feeds);
+    watchedState.feeds.push(data.feeds); //  пушим ссылку на фид
+
     divWithStatusEl.classList.remove('is-invalid');
     inputEl.classList.remove('is-invalid');
     inputEl.value = '';
     inputEl.focus();
 
-    getFeed(data.feeds);
-    observer(watchedState.feeds, watchedState.contents);
+    getFeed(data.feeds); //  получаем фиды
+    //  observer(watchedState.feeds, watchedState.contents); // следим за обновлением
   } catch (err) {
     divWithStatusEl.innerText = i18next.t(err.errors, { lng: watchedState.locale });
     changeLanguage(watchedState.locale, err.errors);

@@ -1,26 +1,14 @@
-/* eslint-disable no-console */
+/* eslint-disable no-restricted-syntax */
 import modalButton from './modalWindow/modalButton';
 import modalWindow from './modalWindow/modalWindow';
 import watchedState from './state';
+import { readPost } from './helper';
+import { feedsEl, contentEl } from './domModify';
 
 const Parser = new DOMParser();
 
 const bodyEl = document.querySelector('.body');
 const feeds = [];
-
-const contentEl = document.createElement('div');
-contentEl.classList.add('col-8', 'content');
-const contentPrimaryTitleEL = document.createElement('p');
-contentPrimaryTitleEL.classList.add('primary_title');
-contentPrimaryTitleEL.innerText = 'Посты';
-contentEl.append(contentPrimaryTitleEL);
-
-const feedsEl = document.createElement('div');
-feedsEl.classList.add('col-4', 'feeds');
-const feedsPrimaryTitleEL = document.createElement('p');
-feedsPrimaryTitleEL.classList.add('primary_title');
-feedsPrimaryTitleEL.innerText = 'Фиды';
-feedsEl.append(feedsPrimaryTitleEL);
 
 const getFeed = (url) => {
   fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`)
@@ -40,13 +28,10 @@ const getFeed = (url) => {
       console.log('state', watchedState);
 
       watchedState.contents.push(content);
-      const item = content.querySelectorAll('item');
-      const feedTitles = content.querySelectorAll('title');
-      const feedDescriptions = content.querySelectorAll('description');
 
-      const itemsArray = Array.from(item);
-      const titlesArray = Array.from(feedTitles);
-      const descriptionsArray = Array.from(feedDescriptions);
+      const itemsArray = Array.from(content.querySelectorAll('item'));
+      const titlesArray = Array.from(content.querySelectorAll('title'));
+      const descriptionsArray = Array.from(content.querySelectorAll('description'));
 
       const links = [];
       itemsArray.map((el) => {
@@ -89,23 +74,12 @@ const getFeed = (url) => {
           watchedState.posts.push(feeds[i].title.innerText);
           watchedState.uiState.posts.push({ title: feeds[i].title.innerText, readed: false });
 
-          const readPost = (el) => {
-            for (const post of watchedState.uiState.posts) {
-              if (post.title === el.text) {
-                post.readed = true;
-                el.classList.remove('fw-bold');
-                el.classList.add('fw-normal');
-              }
-            }
-            console.log('state', watchedState);
-          };
-
           linkEl.addEventListener('click', () => readPost(linkEl));
 
           contentEl.append(boxEl);
           boxEl.append(linkEl);
-          boxEl.append(modalButton(`postModal${i}`));
-          boxEl.append(modalWindow(`postModal${i}`, feeds[i].title.innerHTML, feeds[i].description.innerHTML, feeds[i].link));
+          boxEl.append(modalButton(`postModal-${url}-${i}`));
+          boxEl.append(modalWindow(`postModal-${url}-${i}`, feeds[i].title.innerHTML, feeds[i].description.innerHTML, feeds[i].link));
           bodyEl.prepend(contentEl);
         }
       }

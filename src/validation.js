@@ -17,4 +17,6 @@ const inputSchema = yup.object().shape({
     .url(),
 });
 
-export default inputSchema;
+const repeatSchema = (feeds) => yup.mixed().notOneOf(feeds);
+
+export { inputSchema, repeatSchema };
