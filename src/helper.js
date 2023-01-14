@@ -11,4 +11,4 @@ const readPost = (el) => {
   }
 };
 
-export { readPost };
+export default readPost;

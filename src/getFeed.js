@@ -2,7 +2,7 @@
 import modalButton from './modalWindow/modalButton';
 import modalWindow from './modalWindow/modalWindow';
 import watchedState from './state';
-import { readPost } from './helper';
+import readPost from './helper';
 import { feedsEl, contentEl } from './domModify';
 
 const Parser = new DOMParser();
@@ -18,7 +18,7 @@ const getFeed = (url) => {
         return response.json();
       }
       const h1El = document.createElement('h1');
-      h1El.innerText = 'Что-то пошло не так';
+      h1El.textContent = 'Что-то пошло не так';
       bodyEl.prepend(h1El);
       throw new Error('Network response was not ok.');
     })
@@ -34,7 +34,7 @@ const getFeed = (url) => {
       const descriptionsArray = Array.from(content.querySelectorAll('description'));
 
       const links = [];
-      itemsArray.map((el) => {
+      itemsArray.forEach((el) => {
         const nodes = [...el.childNodes]
           .filter((el1) => el1 instanceof Text)
           .filter((el2) => el2.textContent.trim() !== '');
@@ -68,11 +68,11 @@ const getFeed = (url) => {
           feedsEl.append(h3El);
           bodyEl.append(feedsEl);
         } else {
-          linkEl.innerText = feeds[i].title.innerText;
+          linkEl.textContent = feeds[i].title.textContent;
           linkEl.href = feeds[i].link;
 
-          watchedState.posts.push(feeds[i].title.innerText);
-          watchedState.uiState.posts.push({ title: feeds[i].title.innerText, readed: false });
+          watchedState.posts.push(feeds[i].title.textContent);
+          watchedState.uiState.posts.push({ title: feeds[i].title.textContent, readed: false });
 
           linkEl.addEventListener('click', () => readPost(linkEl));
 
@@ -83,6 +83,12 @@ const getFeed = (url) => {
           bodyEl.prepend(contentEl);
         }
       }
+    })
+    .catch((err) => {
+      const h1El = document.createElement('h1');
+      h1El.textContent = err;
+      bodyEl.prepend(h1El);
+      throw new Error(err);
     });
 };
 
