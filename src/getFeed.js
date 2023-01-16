@@ -71,8 +71,12 @@ const getFeed = (url) => {
           linkEl.textContent = feeds[i].title.textContent;
           linkEl.href = feeds[i].link;
 
-          watchedState.posts.push(feeds[i].title.textContent);
-          watchedState.uiState.posts.push({ title: feeds[i].title.textContent, readed: false });
+          if (!watchedState.posts.includes(feeds[i].title.textContent)) {
+            watchedState.posts.push(feeds[i].title.textContent);
+          }
+          if (!watchedState.uiState.posts.includes({ title: feeds[i].title.textContent, readed: false })) {
+            watchedState.uiState.posts.push({ title: feeds[i].title.textContent, readed: false });
+          }
 
           linkEl.addEventListener('click', () => readPost(linkEl));
 

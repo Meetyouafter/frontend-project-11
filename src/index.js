@@ -26,7 +26,6 @@ formEl.addEventListener('submit', async (e) => {
 
     getFeed(data.feeds); //  получаем фиды
     observer(watchedState.feeds, watchedState.contents);
-    setTimeout(() => console.log(123), 5000);
   } catch (err) {
     divWithStatusEl.innerText = i18next.t(err.errors, { lng: watchedState.locale });
     changeLanguage(watchedState.locale, err.errors);
