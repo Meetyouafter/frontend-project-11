@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import getFeed from './getFeed';
+import { getFeed } from './getFeed';
 
 const Parser = new DOMParser();
 
