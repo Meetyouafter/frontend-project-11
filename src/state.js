@@ -12,6 +12,7 @@ const state = {
   uiState: {
     posts: [],
   },
+  data: {},
 };
 
 const watchedState = onChange(state, function (path, value, previousValue) {
