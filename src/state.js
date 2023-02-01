@@ -1,14 +1,11 @@
 /* eslint-disable func-names */
 /* eslint-disable no-console */
 import onChange from 'on-change';
-import save from 'on-change'
 
 const state = {
-  feeds: ['https://lorem-rss.hexlet.app/feed?unit=second&interval=5', 'https://lorem-rss.hexlet.app/feed?unit=second&interval=10'],
   locale: 'ru',
-  contents: [],
-  posts: [],
-  links: [],
+  feeds: [],
+  content: [],
   uiState: {
     posts: [],
   },

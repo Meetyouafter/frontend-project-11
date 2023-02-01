@@ -10,8 +10,8 @@ const Parser = new DOMParser();
 const bodyEl = document.querySelector('.body');
 const feeds = [];
 
-const getFeed = (url) => {
-  fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`)
+const getFeed = async (url) => {
+  await fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`)
     .then((response) => {
       if (response.ok) {
         watchedState.feeds.push(url);
@@ -22,7 +22,6 @@ const getFeed = (url) => {
       bodyEl.prepend(h1El);
       throw new Error('Network response was not ok.');
     })
-    .then((data) => console.log(data, 'text/html'))
     .then((data) => Parser.parseFromString(data.contents, 'text/html'))
     .then((content) => {
       console.log('content', content);

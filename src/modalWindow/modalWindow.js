@@ -1,4 +1,7 @@
 const modalWindow = (modalId, modalTitle, modalDescription, modalLink) => {
+  console.log(modalTitle);
+  console.log(modalDescription);
+  console.log(modalLink);
   const modalWrap = document.createElement('div');
   modalWrap.classList.add('modal', 'fade');
   modalWrap.setAttribute('id', `${modalId}`);

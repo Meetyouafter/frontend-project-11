@@ -2,9 +2,9 @@ import i18next from 'i18next';
 import { inputSchema, repeatSchema } from './validation';
 import changeLanguage from './translate/translate';
 import watchedState from './state';
-import getFeed from './getFeed';
 import observer from './observer';
 import './style.css';
+import { getContent } from './helper';
 
 const inputEl = document.querySelector('#floatingInput');
 const divWithStatusEl = document.querySelector('.status');
@@ -24,12 +24,11 @@ formEl.addEventListener('submit', async (e) => {
     inputEl.value = '';
     inputEl.focus();
 
-    const getNew = () => {
-      const feed = getFeed(data.feeds);
-      getFeed(feed);
-    };
+    //await getContent(inputEl.value)
+    await console.log(data.feeds)
+    await getContent(data.feeds)
 
-    getNew();
+
     // observer(watchedState.feeds, watchedState.contents);
   } catch (err) {
     divWithStatusEl.innerText = i18next.t(err.errors, { lng: watchedState.locale });

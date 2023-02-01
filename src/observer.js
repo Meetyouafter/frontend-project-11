@@ -1,6 +1,4 @@
 /* eslint-disable no-console */
-import getFeed from './getFeed';
-
 const Parser = new DOMParser();
 
 const observer = (feeds, content) => {

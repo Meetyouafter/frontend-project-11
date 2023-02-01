@@ -11,6 +11,7 @@ i18next.init({
           input_required: 'Enter the RSS',
           input_invalid: 'Enter the correct RSS',
           rss_was_load_message: 'The RSS already exist',
+          rss_not_valid: 'The RSS is not valid',
           rss_done: 'The RSS load was succesful',
         },
         interface: {
@@ -29,6 +30,7 @@ i18next.init({
           input_required: 'Введите адрес RSS',
           input_invalid: 'Введите корректный адрес RSS',
           rss_was_load_message: 'RSS уже существует',
+          rss_not_valid: 'RSS не является валидным',
           rss_done: 'RSS успешно загружен',
         },
         interface: {
