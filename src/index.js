@@ -5,6 +5,7 @@ import watchedState from './state';
 import observer from './observer';
 import './style.css';
 import { getContent } from './helper';
+import app from './app';
 
 const inputEl = document.querySelector('#floatingInput');
 const divWithStatusEl = document.querySelector('.status');
@@ -27,6 +28,7 @@ formEl.addEventListener('submit', async (e) => {
     //await getContent(inputEl.value)
     await console.log(data.feeds)
     await getContent(data.feeds)
+    //await app()
 
 
     // observer(watchedState.feeds, watchedState.contents);

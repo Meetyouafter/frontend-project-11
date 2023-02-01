@@ -1,4 +1,5 @@
 const modalWindow = (modalId, modalTitle, modalDescription, modalLink) => {
+  console.log(modalId);
   console.log(modalTitle);
   console.log(modalDescription);
   console.log(modalLink);

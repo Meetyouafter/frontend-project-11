@@ -5,16 +5,6 @@ import { feedsEl, contentEl } from './domModify';
 import modalWindow from './modalWindow/modalButton';
 import modalButton from './modalWindow/modalWindow';
 
-const readPost = (el) => {
-  for (const post of watchedState.uiState.posts) {
-    if (post.title === el.text) {
-      post.readed = true;
-      el.classList.remove('fw-bold');
-      el.classList.add('fw-normal');
-    }
-  }
-};
-
 const parser = (data) => {
   const Parser = new DOMParser();
   const parseData = Parser.parseFromString(data, 'application/xml');
@@ -65,11 +55,11 @@ const render = (post) => {
   feedsEl.append(h3El);
   bodyEl.append(feedsEl);
 
-  post.posts.map((feed, index) => {
-    console.log(feed)
-    console.log(feed.title)
-    console.log(feed.description)
-    console.log(feed.link)
+  return post.posts.map((feed, index) => {
+    console.log(feed);
+    console.log(feed.title);
+    console.log(feed.description);
+    console.log(feed.link);
     const boxEl = document.createElement('div');
 
     const linkEl = document.createElement('a');
@@ -78,19 +68,23 @@ const render = (post) => {
     linkEl.classList.add('fw-bold');
     linkEl.textContent = feed.title;
     linkEl.href = feed.link;
-    linkEl.addEventListener('click', () => readPost(linkEl));
+    linkEl.addEventListener('click', () => {
+      linkEl.classList.remove('fw-bold');
+      linkEl.classList.add('fw-normal');
+    });
+
     contentEl.append(boxEl);
     boxEl.append(linkEl);
     boxEl.append(modalButton(`postModal-${index}`));
     boxEl.append(modalWindow(`postModal-${index}`, feed.title, feed.description, feed.link));
     bodyEl.prepend(contentEl);
+    return bodyEl;
   });
-
 };
 
-const getContent = (url) => {
+const getContent = async (url) => {
   const bodyEl = document.querySelector('.body');
-  fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`)
+  await fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`)
     .then((response) => {
       if (response.ok) {
         watchedState.feeds.push(url);
