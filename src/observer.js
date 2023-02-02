@@ -1,4 +1,5 @@
-import observerParser, { observerRender } from './observerParser';
+import { observerParser } from './parser';
+import { observerRender } from './render';
 import watchedState from './state';
 
 const observer = (state) => {

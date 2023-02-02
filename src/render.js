@@ -105,4 +105,37 @@ const render = (state) => {
   state.posts.map((post) => renderPost(post));
 };
 
+const renderPostForObserver = (post) => {
+  const index = uuidv4();
+  const bodyEl = document.querySelector('.body');
+  const boxEl = document.createElement('div');
+  const linkEl = document.createElement('a');
+  linkEl.setAttribute('target', '_blank');
+  boxEl.classList.add('postBox');
+  linkEl.classList.add('fw-bold');
+  linkEl.textContent = post.title;
+  linkEl.href = post.link;
+  linkEl.addEventListener('click', () => {
+    watchedState.uiState.readedPost.push(linkEl.textContent);
+    if (watchedState.uiState.readedPost.includes(linkEl.textContent)) {
+      linkEl.classList.remove('fw-bold');
+      linkEl.classList.add('fw-normal');
+    }
+  });
+  contentEl.append(boxEl);
+  boxEl.append(linkEl);
+  boxEl.append(renderModalButton(`postModal-${index}`));
+  boxEl.append(renderModalWindow(`postModal-${index}`, post.title, post.description, post.link));
+  bodyEl.prepend(contentEl);
+  return bodyEl;
+};
+
+const observerRender = (state) => {
+  if (state.newPosts.length === 0) return;
+  state.newPosts.map((post) => renderPostForObserver(post));
+  state.posts.concat(state.newPosts);
+  state.newPosts = [];
+};
+
 export default render;
+export { observerRender };

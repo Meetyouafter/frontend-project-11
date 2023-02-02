@@ -2,7 +2,7 @@ import parser from './parser';
 import render from './render';
 import watchedState from './state';
 
-const app = async (url) => {
+const getFeed = async (url) => {
   const bodyEl = document.querySelector('.body');
   await fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`)
     .then((response) => {
@@ -25,4 +25,4 @@ const app = async (url) => {
     });
 };
 
-export default app;
+export default getFeed;

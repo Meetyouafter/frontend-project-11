@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import { inputSchema, repeatSchema } from './validation';
 import changeLanguage from './translate/translate';
-import app from './app';
+import getFeed from './getFeed';
 import watchedState from './state';
 import './style.css';
 import observer from './observer';
@@ -22,7 +22,7 @@ const getInitialRender = () => {
       inputEl.classList.remove('is-invalid');
       inputEl.value = '';
       inputEl.focus();
-      app(data.feeds);
+      getFeed(data.feeds);
       observer(watchedState);
     } catch (err) {
       divWithStatusEl.innerText = i18next.t(err.errors, { lng: watchedState.locale });
