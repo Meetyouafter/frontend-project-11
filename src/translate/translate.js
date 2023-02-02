@@ -22,6 +22,7 @@ i18next.init({
           example: 'Example: https://ru.hexlet.io/lessons.rss',
           choiseLang: 'Choise language',
         },
+        network: 'Network error',
       },
     },
     ru: {
@@ -41,6 +42,7 @@ i18next.init({
           example: 'Пример: https://ru.hexlet.io/lessons.rss',
           choiseLang: 'Выбор языка',
         },
+        network: 'Ошибка сети',
       },
     },
   },

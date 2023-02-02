@@ -2,6 +2,8 @@ import { observerParser } from './parser';
 import { observerRender } from './render';
 import watchedState from './state';
 
+const timer = (func, time) => setTimeout(func, time);
+
 const observer = (state) => {
   const promises = state.feeds.map((url) => {
     const promise = fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`)
@@ -12,10 +14,14 @@ const observer = (state) => {
         return posts.map((post) => (!titles.includes(post.title) ? watchedState.newPosts.push(post) : ''));
       })
       .then(() => observerRender(watchedState))
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.warn(error);
+      });
     return promise;
   });
-  Promise.all(promises).finally(() => setTimeout(() => observer(state), 5000));
+  Promise.all(promises)
+    .then(() => timer(() => observer(state), 5000))
+    .catch(clearTimeout(timer));
 };
 
 export default observer;

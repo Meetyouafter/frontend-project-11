@@ -25,6 +25,8 @@ const getInitialRender = () => {
       getFeed(data.feeds);
       observer(watchedState);
     } catch (err) {
+      console.warn(err);
+
       divWithStatusEl.innerText = i18next.t(err.errors, { lng: watchedState.locale });
       changeLanguage(watchedState.locale, err.errors);
       divWithStatusEl.classList.add('is-invalid');

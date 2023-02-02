@@ -4,6 +4,7 @@ import onChange from 'on-change';
 
 const state = {
   locale: 'ru',
+  errors: [],
   feeds: [],
   content: [],
   posts: [],
