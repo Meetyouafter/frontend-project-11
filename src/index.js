@@ -4,6 +4,7 @@ import changeLanguage from './translate/translate';
 import app from './app';
 import watchedState from './state';
 import './style.css';
+import observer from './observer';
 
 const inputEl = document.querySelector('#floatingInput');
 const divWithStatusEl = document.querySelector('.status');
@@ -21,6 +22,7 @@ formEl.addEventListener('submit', async (e) => {
     inputEl.value = '';
     inputEl.focus();
     app(data.feeds);
+    observer(data.feeds);
   } catch (err) {
     divWithStatusEl.innerText = i18next.t(err.errors, { lng: watchedState.locale });
     changeLanguage(watchedState.locale, err.errors);
