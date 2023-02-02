@@ -28,7 +28,7 @@ i18next.init({
       translation: {
         rss: {
           input_required: 'Введите адрес RSS',
-          input_invalid: 'Введите корректный адрес RSS',
+          input_invalid: 'Ссылка должна быть валидным URL',
           rss_was_load_message: 'RSS уже существует',
           rss_not_valid: 'RSS не является валидным',
           rss_done: 'RSS успешно загружен',
