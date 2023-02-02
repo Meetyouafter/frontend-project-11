@@ -6,6 +6,7 @@ const state = {
   locale: 'ru',
   feeds: [],
   content: [],
+  posts: [],
   uiState: {
     posts: [],
   },
