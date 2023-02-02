@@ -1,6 +1,29 @@
 import { v4 as uuidv4 } from 'uuid';
 import watchedState from './state';
 
+const getPostsData = async (content) => {
+  const id = uuidv4();
+  const feedData = await content.querySelector('channel');
+  const feedItems = await feedData.querySelectorAll('item');
+  const itemsArray = await Array.from(feedItems);
+
+  return itemsArray.map((item) => {
+    const title = item.querySelector('title').textContent;
+    const description = item.querySelector('description').textContent;
+    const link = item.querySelector('link').textContent;
+    return {
+      title, description, link, id,
+    };
+  });
+};
+
+const observerParser = (data) => {
+  const Parser = new DOMParser();
+  const parseData = Parser.parseFromString(data, 'application/xml');
+  const posts = getPostsData(parseData);
+  return posts;
+};
+
 const contentEl = document.createElement('div');
 contentEl.classList.add('col-8', 'content');
 const contentPrimaryTitleEL = document.createElement('p');
@@ -63,18 +86,6 @@ const renderModalWindow = (modalId, modalTitle, modalDescription, modalLink) => 
   return modalWrap;
 };
 
-const renderFeedData = (contents) => contents.map((content) => {
-  const bodyEl = document.querySelector('.body');
-  const h2El = document.createElement('h2');
-  const h3El = document.createElement('h3');
-  h2El.textContent = content.title;
-  h3El.textContent = content.description;
-  feedsEl.append(h2El);
-  feedsEl.append(h3El);
-  bodyEl.append(feedsEl);
-  return bodyEl;
-});
-
 const renderPost = (post) => {
   const index = uuidv4();
   const bodyEl = document.querySelector('.body');
@@ -100,9 +111,12 @@ const renderPost = (post) => {
   return bodyEl;
 };
 
-const render = (state) => {
-  renderFeedData(state.content);
-  state.posts.map((post) => renderPost(post));
+const observerRender = (state) => {
+  if (state.newPosts.length === 0) return;
+  state.newPosts.map((post) => renderPost(post));
+  state.posts.concat(state.newPosts);
+  state.newPosts = [];
 };
 
-export default render;
+export default observerParser;
+export { observerRender };

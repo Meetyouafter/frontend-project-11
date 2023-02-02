@@ -7,17 +7,19 @@ const state = {
   feeds: [],
   content: [],
   posts: [],
+  newPosts: [],
   uiState: {
-    posts: [],
+    readedPost: [],
   },
   data: {},
 };
 
 const watchedState = onChange(state, function (path, value, previousValue) {
-  console.log(this);
-  console.log(path);
-  console.log(previousValue);
-  console.log(value);
+  console.log(this, path, previousValue, value);
+  // console.log(this);
+  // console.log(path);
+  // console.log(previousValue);
+  // console.log(value);
 });
 
 export default watchedState;

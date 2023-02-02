@@ -15,9 +15,14 @@ const app = async (url) => {
       bodyEl.prepend(h1El);
       throw new Error('Network response was not ok.');
     })
-    .then((data) => parser(data.contents))
+    .then((data) => parser(watchedState, data.contents))
     .then(() => render(watchedState))
-    .catch((error) => console.error(error));
+    .catch((error) => {
+      const h1El = document.createElement('h1');
+      h1El.textContent = `Ошибка ${error}`;
+      bodyEl.prepend(h1El);
+      throw new Error(error);
+    });
 };
 
 export default app;
