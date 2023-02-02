@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import parser from './parser';
 import render from './render';
 import watchedState from './state';
@@ -17,11 +18,12 @@ const getFeed = async (url) => {
     })
     .then((data) => parser(watchedState, data.contents))
     .then(() => render(watchedState))
-    .catch((error) => {
-      const h1El = document.createElement('h1');
-      h1El.textContent = `Ошибка ${error}`;
-      bodyEl.prepend(h1El);
-      throw new Error(error);
+    .catch(() => {
+      const inputEl = document.querySelector('#floatingInput');
+      const divWithStatusEl = document.querySelector('.status');
+      divWithStatusEl.classList.add('is-invalid');
+      inputEl.classList.add('is-invalid');
+      divWithStatusEl.innerText = i18next.t('rss.rss_not_valid', { lng: watchedState.locale });
     });
 };
 
