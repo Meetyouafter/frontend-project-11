@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import watchedState from './state';
+import watchedState from './state.js';
 
 const contentEl = document.createElement('div');
 contentEl.classList.add('col-8', 'content');

@@ -1,5 +1,5 @@
-import watchedState from '../state';
-import changeLanguage from './translate';
+import watchedState from '../state.js';
+import changeLanguage from './translate.js';
 
 const buttonToEnLangEl = document.querySelector('.btn_enLang');
 const buttonToRuLangEl = document.querySelector('.btn_ruLang');

@@ -1,6 +1,6 @@
-import { observerParser } from './parser';
-import { observerRender } from './render';
-import watchedState from './state';
+import { observerParser } from './parser.js';
+import { observerRender } from './render.js';
+import watchedState from './state.js';
 
 const timer = (func, time) => setTimeout(func, time);
 

@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import watchedState from '../state';
+import watchedState from '../state.js';
 
 i18next.init({
   lng: watchedState.locale,

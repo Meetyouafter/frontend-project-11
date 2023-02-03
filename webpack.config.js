@@ -1,53 +1,9 @@
-/* eslint-disable no-undef */
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
-
-const isProduction = process.env.NODE_ENV === 'production';
-
-const config = {
-  entry: ['./src/index.js', './src/translate/buttons.js'],
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-  },
-  devServer: {
-    open: true,
-    host: 'localhost',
-    port: 3000,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-      'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
-    },
-  },
-  node: {
-    global: true,
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: 'index.html',
-    }),
-  ],
+export default {
+  mode: process.env.NODE_ENV || 'development',
   module: {
     rules: [
-      {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        type: 'asset/resource',
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.js$/,
-        enforce: 'pre',
-        use: ['source-map-loader'],
-      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -58,17 +14,38 @@ const config = {
           },
         },
       },
+      { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+      },
     ],
   },
-};
-
-module.exports = () => {
-  if (isProduction) {
-    config.mode = 'production';
-
-    config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
-  } else {
-    config.mode = 'development';
-  }
-  return config;
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+    }),
+  ],
+  resolve: {
+    extensions: '.js',
+  },
+  devServer: {
+    allowedHosts: 'all',
+    port: 3000,
+    historyApiFallback: true,
+  },
+  output: {
+    clean: true,
+  },
+  resolve: {
+    extensions: ['.js'],
+  },
 };
