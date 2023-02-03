@@ -34,9 +34,6 @@ export default {
       template: 'index.html',
     }),
   ],
-  resolve: {
-    extensions: '.js',
-  },
   devServer: {
     allowedHosts: 'all',
     port: 3000,

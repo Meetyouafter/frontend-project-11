@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:dev": "cross-env NODE_ENV=development webpack",
     "build:prod": "cross-env NODE_ENV=production webpack",
-    "start": "cross-env NODE_ENV=development webpack serve"
+    "start": "cross-env NODE_ENV=development webpack serve",
+    "start:prod": "cross-env NODE_ENV=production webpack serve"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,9 @@
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
     "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.7.2",
+    "postcss": "^8.4.21",
+    "postcss-loader": "^7.0.2",
     "prettier": "^2.8.0",
     "source-map-loader": "^4.0.1",
     "style-loader": "^3.3.1",
