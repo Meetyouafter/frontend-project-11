@@ -2,18 +2,16 @@ import { v4 as uuidv4 } from 'uuid';
 import onChange from 'on-change';
 
 const renderModalWindow = (uiState) => {
-  console.log('modal state uiState uiState.uiState.modalWindow[0]', uiState.uiState.modalWindow[0])
-  console.log('modal state uiState uiState.uiState.modalWindow[0]', uiState.uiState.modalWindow[1])
-  console.log('modal state uiState uiState.uiState.modalWindow[0]', uiState.uiState.modalWindow[2])
+  const modalData = uiState.uiState.modalWindow;
+  const [title, description, link] = modalData;
   const modal = document.querySelector('#modal');
   const modalTitle = modal.querySelector('.modal-title');
-  modalTitle.textContent = uiState.uiState.modalWindow[1];
+  modalTitle.textContent = title;
   const modalBody = modal.querySelector('.modal-body');
-  modalBody.textContent = uiState.uiState.modalWindow[1];
+  modalBody.textContent = description;
   const readButton = modal.querySelector('[target="_blank"]');
-  readButton.setAttribute('href', uiState.uiState.modalWindow[2]);
+  readButton.setAttribute('href', link);
   return modal;
-
 };
 
 const state = {
