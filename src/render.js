@@ -27,10 +27,10 @@ const state = {
   data: {},
 };
 
-const watchedState = onChange(state, function (path, value, previousValue) {
+const watchedState = onChange(state, (path, value, previousValue) => {
   console.log(this, path, previousValue, value);
+  const bodyEl = document.querySelector('.body');
   if (path === 'uiState.modalWindow') {
-    const bodyEl = document.querySelector('.body');
     const modalWindow = modalWindowView(watchedState);
     const modalButton = document.querySelector('.btn-outline-secondary');
     modalButton.addEventListener('click', async () => {

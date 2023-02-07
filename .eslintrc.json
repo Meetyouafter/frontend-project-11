@@ -12,7 +12,6 @@
     },
     "rules": {
       "import/extensions": "off",
-      "eqeqeq": "off",
       "no-param-reassign": "off"
     }
 }

@@ -28,7 +28,7 @@ const getFeed = async (url) => {
       const divWithStatusEl = document.querySelector('.status');
       divWithStatusEl.classList.add('is-invalid');
       inputEl.classList.add('is-invalid');
-      if (error == 'TypeError: Failed to fetch') {
+      if (String(error) === 'TypeError: Failed to fetch') {
         divWithStatusEl.innerText = i18next.t('network', { lng: watchedState.locale });
       } else {
         divWithStatusEl.innerText = i18next.t('rss.rss_not_valid', { lng: watchedState.locale });
