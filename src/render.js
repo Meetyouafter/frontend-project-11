@@ -2,45 +2,18 @@ import { v4 as uuidv4 } from 'uuid';
 import onChange from 'on-change';
 
 const renderModalWindow = (uiState) => {
-  console.log('modal state uiState', uiState)
-  console.log('modal state uiState uiState', uiState.uiState)
   console.log('modal state uiState uiState.uiState.modalWindow[0]', uiState.uiState.modalWindow[0])
-  const modalWrap = document.createElement('div');
-  modalWrap.classList.add('modal', 'fade');
-  modalWrap.setAttribute('id', 'modal');
-  modalWrap.setAttribute('tabindex', -1);
-  modalWrap.setAttribute('aria-labelledby', 'modal');
-  modalWrap.setAttribute('aria-hidden', true);
-  modalWrap.setAttribute('data-mdb-backdrop', true);
-  modalWrap.innerHTML = `
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id=modalLabel>${uiState.uiState.modalWindow[0]}</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <p>${uiState.uiState.modalWindow[1]}</p>
-        </div>
-        <div class="modal-footer">
-          <a href="${uiState.uiState.modalWindow[2]}" class="btn btn-primary" role="button" aria-disabled="false" target="_blank">Читать полностью</a>
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Закрыть
-          </button>
-        </div>
-      </div>
-    </div>
-    `;
-  return modalWrap;
+  console.log('modal state uiState uiState.uiState.modalWindow[0]', uiState.uiState.modalWindow[1])
+  console.log('modal state uiState uiState.uiState.modalWindow[0]', uiState.uiState.modalWindow[2])
+  const modal = document.querySelector('#modal');
+  const modalTitle = modal.querySelector('.modal-title');
+  modalTitle.textContent = uiState.uiState.modalWindow[1];
+  const modalBody = modal.querySelector('.modal-body');
+  modalBody.textContent = uiState.uiState.modalWindow[1];
+  const readButton = modal.querySelector('[target="_blank"]');
+  readButton.setAttribute('href', uiState.uiState.modalWindow[2]);
+  return modal;
+
 };
 
 const state = {
@@ -59,6 +32,15 @@ const state = {
 
 const watchedState = onChange(state, function (path, value, previousValue) {
   console.log(this, path, previousValue, value);
+  if (path === 'uiState.modalWindow') {
+  const bodyEl = document.querySelector('.body');
+    const modalWindow = renderModalWindow(watchedState);
+    const modalButton = document.querySelector('.btn-outline-secondary')
+    modalButton.addEventListener('click', async () => {
+      await bodyEl.prepend(modalWindow);
+    });
+
+  }
   // console.log(path);
   // console.log(previousValue);
   // console.log(value);
