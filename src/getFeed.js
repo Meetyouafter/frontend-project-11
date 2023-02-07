@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import parser from './parser.js';
 import render from './render.js';
-import watchedState from './state.js';
+import { watchedState } from './render.js';
 
 const getFeed = async (url) => {
   const bodyEl = document.querySelector('.body');

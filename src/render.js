@@ -1,5 +1,68 @@
 import { v4 as uuidv4 } from 'uuid';
-import watchedState from './state.js';
+import onChange from 'on-change';
+
+const renderModalWindow = (uiState) => {
+  console.log('modal state uiState', uiState)
+  console.log('modal state uiState uiState', uiState.uiState)
+  console.log('modal state uiState uiState.uiState.modalWindow[0]', uiState.uiState.modalWindow[0])
+  const modalWrap = document.createElement('div');
+  modalWrap.classList.add('modal', 'fade');
+  modalWrap.setAttribute('id', 'modal');
+  modalWrap.setAttribute('tabindex', -1);
+  modalWrap.setAttribute('aria-labelledby', 'modal');
+  modalWrap.setAttribute('aria-hidden', true);
+  modalWrap.setAttribute('data-mdb-backdrop', true);
+  modalWrap.innerHTML = `
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id=modalLabel>${uiState.uiState.modalWindow[0]}</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p>${uiState.uiState.modalWindow[1]}</p>
+        </div>
+        <div class="modal-footer">
+          <a href="${uiState.uiState.modalWindow[2]}" class="btn btn-primary" role="button" aria-disabled="false" target="_blank">Читать полностью</a>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Закрыть
+          </button>
+        </div>
+      </div>
+    </div>
+    `;
+  return modalWrap;
+};
+
+const state = {
+  locale: 'ru',
+  errors: [],
+  feeds: [],
+  content: [],
+  posts: [],
+  newPosts: [],
+  uiState: {
+    readedPost: [],
+    modalWindow: '',
+  },
+  data: {},
+};
+
+const watchedState = onChange(state, function (path, value, previousValue) {
+  console.log(this, path, previousValue, value);
+  // console.log(path);
+  // console.log(previousValue);
+  // console.log(value);
+});
 
 const contentEl = document.createElement('div');
 contentEl.classList.add('col-8', 'content');
@@ -15,52 +78,13 @@ feedsPrimaryTitleEL.classList.add('primary_title');
 feedsPrimaryTitleEL.innerText = 'Фиды';
 feedsEl.append(feedsPrimaryTitleEL);
 
-const renderModalButton = (modalId) => {
+const renderModalButton = () => {
   const postButton = document.createElement('button');
   postButton.classList.add('btn', 'btn-outline-secondary');
   postButton.setAttribute('data-bs-toggle', 'modal');
-  postButton.setAttribute('data-bs-target', `#${modalId}`);
+  postButton.setAttribute('data-bs-target', '#modal');
   postButton.innerText = 'Просмотр';
   return postButton;
-};
-
-const renderModalWindow = (modalId, modalTitle, modalDescription, modalLink) => {
-  const modalWrap = document.createElement('div');
-  modalWrap.classList.add('modal', 'fade');
-  modalWrap.setAttribute('id', `${modalId}`);
-  modalWrap.setAttribute('tabindex', -1);
-  modalWrap.setAttribute('aria-labelledby', `${modalId}Label`);
-  modalWrap.setAttribute('aria-hidden', true);
-  modalWrap.setAttribute('data-mdb-backdrop', true);
-  modalWrap.innerHTML = `
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id=${modalId}Label>${modalTitle}</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <p>${modalDescription}</p>
-        </div>
-        <div class="modal-footer">
-          <a href="${modalLink}" class="btn btn-primary" role="button" aria-disabled="false" target="_blank">Читать полностью</a>
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Закрыть
-          </button>
-        </div>
-      </div>
-    </div>
-    `;
-  return modalWrap;
 };
 
 const renderFeedData = (contents) => contents.map((content) => {
@@ -76,7 +100,6 @@ const renderFeedData = (contents) => contents.map((content) => {
 });
 
 const renderPost = (post) => {
-  const index = uuidv4();
   const bodyEl = document.querySelector('.body');
   const boxEl = document.createElement('div');
   const linkEl = document.createElement('a');
@@ -94,8 +117,13 @@ const renderPost = (post) => {
   });
   contentEl.append(boxEl);
   boxEl.append(linkEl);
-  boxEl.append(renderModalButton(`postModal-${index}`));
-  boxEl.append(renderModalWindow(`postModal-${index}`, post.title, post.description, post.link));
+  const modalButton = renderModalButton();
+  modalButton.addEventListener('click', async () => {
+     watchedState.uiState.modalWindow = await [post.title, post.description, post.link];
+     const modalWindow = () => renderModalWindow(watchedState)
+    await bodyEl.prepend(modalWindow());
+  });
+  boxEl.append(modalButton);
   bodyEl.prepend(contentEl);
   return bodyEl;
 };
@@ -125,7 +153,6 @@ const renderPostForObserver = (post) => {
   contentEl.append(boxEl);
   boxEl.append(linkEl);
   boxEl.append(renderModalButton(`postModal-${index}`));
-  boxEl.append(renderModalWindow(`postModal-${index}`, post.title, post.description, post.link));
   bodyEl.prepend(contentEl);
   return bodyEl;
 };
@@ -139,3 +166,4 @@ const observerRender = (state) => {
 
 export default render;
 export { observerRender };
+export { watchedState };

@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import { inputSchema, repeatSchema } from './validation.js';
 import changeLanguage from './translate/translate.js';
 import getFeed from './getFeed.js';
-import watchedState from './state.js';
+import { watchedState } from './render.js';
 import './style.css';
 import observer from './observer.js';
 
