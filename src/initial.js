@@ -3,8 +3,8 @@ import { inputSchema, repeatSchema } from './validation.js';
 import changeLanguage from './translate/translate.js';
 import getFeed from './getFeed.js';
 import { watchedState } from './render.js';
-import './style.css';
 import observer from './observer.js';
+import './style.css';
 
 const getInitialRender = () => {
   const inputEl = document.querySelector('#floatingInput');

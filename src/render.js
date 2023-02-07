@@ -1,7 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
 import onChange from 'on-change';
 
-const renderModalWindow = (uiState) => {
+const modalWindowView = (uiState) => {
   const modalData = uiState.uiState.modalWindow;
   const [title, description, link] = modalData;
   const modal = document.querySelector('#modal');
@@ -32,7 +31,7 @@ const watchedState = onChange(state, function (path, value, previousValue) {
   console.log(this, path, previousValue, value);
   if (path === 'uiState.modalWindow') {
     const bodyEl = document.querySelector('.body');
-    const modalWindow = renderModalWindow(watchedState);
+    const modalWindow = modalWindowView(watchedState);
     const modalButton = document.querySelector('.btn-outline-secondary');
     modalButton.addEventListener('click', async () => {
       await bodyEl.prepend(modalWindow);
@@ -54,7 +53,7 @@ feedsPrimaryTitleEL.classList.add('primary_title');
 feedsPrimaryTitleEL.innerText = 'Фиды';
 feedsEl.append(feedsPrimaryTitleEL);
 
-const renderModalButton = () => {
+const modalButtonView = () => {
   const postButton = document.createElement('button');
   postButton.classList.add('btn', 'btn-outline-secondary');
   postButton.setAttribute('data-bs-toggle', 'modal');
@@ -63,7 +62,7 @@ const renderModalButton = () => {
   return postButton;
 };
 
-const renderFeedData = (contents) => contents.map((content) => {
+const feedDataView = (contents) => contents.map((content) => {
   const bodyEl = document.querySelector('.body');
   const h2El = document.createElement('h2');
   const h3El = document.createElement('h3');
@@ -93,12 +92,11 @@ const renderPost = (post) => {
   });
   contentEl.append(boxEl);
   boxEl.append(linkEl);
-  const modalButton = renderModalButton();
+  const modalButton = modalButtonView();
   modalButton.addEventListener('click', async () => {
     watchedState.uiState.modalWindow = await [post.title, post.description, post.link];
-    const modalWindow = () => renderModalWindow(watchedState);
+    const modalWindow = () => modalWindowView(watchedState);
     await bodyEl.prepend(modalWindow());
-    console.log('link', linkEl);
     watchedState.uiState.readedPost.push(post.title);
     if (watchedState.uiState.readedPost.includes(post.title)) {
       linkEl.classList.remove('fw-bold');
@@ -110,13 +108,12 @@ const renderPost = (post) => {
   return bodyEl;
 };
 
-const render = (state) => {
-  renderFeedData(state.content);
-  state.posts.map((post) => renderPost(post));
+const render = (watchState) => {
+  feedDataView(watchState.content);
+  watchState.posts.map((post) => renderPost(post));
 };
 
 const renderPostForObserver = (post) => {
-  const index = uuidv4();
   const bodyEl = document.querySelector('.body');
   const boxEl = document.createElement('div');
   const linkEl = document.createElement('a');
@@ -134,20 +131,17 @@ const renderPostForObserver = (post) => {
   });
   contentEl.append(boxEl);
   boxEl.append(linkEl);
-  const modalButton = renderModalButton();
-  modalButton.addEventListener('click', () => {
-    console.log('link', linkEl);
-  });
+  const modalButton = modalButtonView();
   boxEl.append(modalButton);
   bodyEl.prepend(contentEl);
   return bodyEl;
 };
 
-const observerRender = (state) => {
-  if (state.newPosts.length === 0) return;
-  state.newPosts.map((post) => renderPostForObserver(post));
-  state.posts.concat(state.newPosts);
-  state.newPosts = [];
+const observerRender = (obsState) => {
+  if (obsState.newPosts.length === 0) return;
+  obsState.newPosts.map((post) => renderPostForObserver(post));
+  obsState.posts.concat(obsState.newPosts);
+  obsState.newPosts = [];
 };
 
 export default render;
