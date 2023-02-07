@@ -31,17 +31,13 @@ const state = {
 const watchedState = onChange(state, function (path, value, previousValue) {
   console.log(this, path, previousValue, value);
   if (path === 'uiState.modalWindow') {
-  const bodyEl = document.querySelector('.body');
+    const bodyEl = document.querySelector('.body');
     const modalWindow = renderModalWindow(watchedState);
-    const modalButton = document.querySelector('.btn-outline-secondary')
+    const modalButton = document.querySelector('.btn-outline-secondary');
     modalButton.addEventListener('click', async () => {
       await bodyEl.prepend(modalWindow);
     });
-
   }
-  // console.log(path);
-  // console.log(previousValue);
-  // console.log(value);
 });
 
 const contentEl = document.createElement('div');
@@ -99,9 +95,15 @@ const renderPost = (post) => {
   boxEl.append(linkEl);
   const modalButton = renderModalButton();
   modalButton.addEventListener('click', async () => {
-     watchedState.uiState.modalWindow = await [post.title, post.description, post.link];
-     const modalWindow = () => renderModalWindow(watchedState)
+    watchedState.uiState.modalWindow = await [post.title, post.description, post.link];
+    const modalWindow = () => renderModalWindow(watchedState);
     await bodyEl.prepend(modalWindow());
+    console.log('link', linkEl);
+    watchedState.uiState.readedPost.push(post.title);
+    if (watchedState.uiState.readedPost.includes(post.title)) {
+      linkEl.classList.remove('fw-bold');
+      linkEl.classList.add('fw-normal');
+    }
   });
   boxEl.append(modalButton);
   bodyEl.prepend(contentEl);
@@ -132,7 +134,11 @@ const renderPostForObserver = (post) => {
   });
   contentEl.append(boxEl);
   boxEl.append(linkEl);
-  boxEl.append(renderModalButton(`postModal-${index}`));
+  const modalButton = renderModalButton();
+  modalButton.addEventListener('click', () => {
+    console.log('link', linkEl);
+  });
+  boxEl.append(modalButton);
   bodyEl.prepend(contentEl);
   return bodyEl;
 };
