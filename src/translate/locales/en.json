@@ -1,0 +1,20 @@
+{
+    "translation": {
+      "rss": {
+        "input_required": "Enter the RSS",
+        "input_invalid": "Enter the correct RSS",
+        "rss_was_load_message": "The RSS already exist",
+        "rss_not_valid": "The RSS is not valid",
+        "rss_done": "The RSS load was succesful"
+      },
+      "interface": {
+        "title": "RSS agregator",
+        "description": "Let's start to read the RSS now! It is easy end beautiful.",
+        "button": "Add",
+        "input": "RSS link",
+        "example": "Example: https://ru.hexlet.io/lessons.rss",
+        "choiseLang": "Choise language"
+      },
+      "network": "Network error"
+    }
+  }

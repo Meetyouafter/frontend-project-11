@@ -1,50 +1,14 @@
 import i18next from 'i18next';
 import { watchedState } from '../render.js';
+import en from './locales/en.json';
+import ru from './locales/ru.json';
 
 i18next.init({
   lng: watchedState.locale,
   debug: true,
   resources: {
-    en: {
-      translation: {
-        rss: {
-          input_required: 'Enter the RSS',
-          input_invalid: 'Enter the correct RSS',
-          rss_was_load_message: 'The RSS already exist',
-          rss_not_valid: 'The RSS is not valid',
-          rss_done: 'The RSS load was succesful',
-        },
-        interface: {
-          title: 'RSS agregator',
-          description: "Let's start to read the RSS now! It is easy end beautiful.",
-          button: 'Add',
-          input: 'RSS link',
-          example: 'Example: https://ru.hexlet.io/lessons.rss',
-          choiseLang: 'Choise language',
-        },
-        network: 'Network error',
-      },
-    },
-    ru: {
-      translation: {
-        rss: {
-          input_required: 'Введите адрес RSS',
-          input_invalid: 'Ссылка должна быть валидным URL',
-          rss_was_load_message: 'RSS уже существует',
-          rss_not_valid: 'Ресурс не содержит валидный RSS',
-          rss_done: 'RSS успешно загружен',
-        },
-        interface: {
-          title: 'RSS агрегатор',
-          description: 'Начните читать RSS сегодня! Это легко, это красиво.',
-          button: 'Добавить',
-          input: 'Ссылка RSS',
-          example: 'Пример: https://ru.hexlet.io/lessons.rss',
-          choiseLang: 'Выбор языка',
-        },
-        network: 'Ошибка сети',
-      },
-    },
+    en,
+    ru,
   },
 });
 

@@ -4,16 +4,29 @@ import changeLanguage from './translate/translate.js';
 import getFeed from './getFeed.js';
 import { watchedState } from './render.js';
 import observer from './observer.js';
-import './style.css';
 
 const getInitialRender = () => {
   const inputEl = document.querySelector('#floatingInput');
   const divWithStatusEl = document.querySelector('.status');
   const formEl = document.querySelector('.form');
+  const buttonToEnLangEl = document.querySelector('.btn_enLang');
+  const buttonToRuLangEl = document.querySelector('.btn_ruLang');
+
+  buttonToEnLangEl.addEventListener('click', () => {
+    watchedState.locale = 'en';
+    changeLanguage(watchedState.locale);
+  });
+
+  buttonToRuLangEl.addEventListener('click', () => {
+    watchedState.locale = 'ru';
+    changeLanguage(watchedState.locale);
+  });
 
   formEl.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const data = { feeds: inputEl.value };
+    const formData = new FormData(e.target);
+    const url = formData.get('url');
+    const data = { feeds: url };
     try {
       await inputSchema.validate(data);
       await repeatSchema(watchedState.feeds).validate(data.feeds);
@@ -25,8 +38,6 @@ const getInitialRender = () => {
       getFeed(data.feeds);
       observer(watchedState);
     } catch (err) {
-      console.warn(err);
-
       divWithStatusEl.innerText = i18next.t(err.errors, { lng: watchedState.locale });
       changeLanguage(watchedState.locale, err.errors);
       divWithStatusEl.classList.add('is-invalid');

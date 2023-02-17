@@ -1,0 +1,20 @@
+{
+  "translation": {
+    "rss": {
+      "input_required": "Введите адрес RSS",
+      "input_invalid": "Ссылка должна быть валидным URL",
+      "rss_was_load_message": "RSS уже существует",
+      "rss_not_valid": "Ресурс не содержит валидный RSS",
+      "rss_done": "RSS успешно загружен"
+    },
+    "interface": {
+      "title": "RSS агрегатор",
+      "description": "Начните читать RSS сегодня! Это легко, это красиво.",
+      "button": "Добавить",
+      "input": "Ссылка RSS",
+      "example": "Пример: https://ru.hexlet.io/lessons.rss",
+      "choiseLang": "Выбор языка"
+    },
+    "network": "Ошибка сети"
+  }
+}  

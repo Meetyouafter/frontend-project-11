@@ -13,7 +13,7 @@ const modalWindowView = (uiState) => {
   return modal;
 };
 
-const state = {
+const getInitstate = () => ({
   locale: 'ru',
   errors: [],
   feeds: [],
@@ -25,7 +25,9 @@ const state = {
     modalWindow: '',
   },
   data: {},
-};
+});
+
+const state = getInitstate();
 
 const watchedState = onChange(state, (path, value, previousValue) => {
   console.log(this, path, previousValue, value);

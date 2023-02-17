@@ -12,10 +12,7 @@ const observer = (state) => {
         const titles = watchedState.posts.map((post) => post.title);
         return posts.map((post) => (!titles.includes(post.title) ? watchedState.newPosts.push(post) : ''));
       })
-      .then(() => observerRender(watchedState))
-      .catch((error) => {
-        console.warn(error);
-      });
+      .then(() => observerRender(watchedState));
     return promise;
   });
   Promise.all(promises)
