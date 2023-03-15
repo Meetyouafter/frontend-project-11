@@ -30,12 +30,12 @@ const getInitialRender = () => {
     try {
       await inputSchema.validate(data);
       await repeatSchema(watchedState.feeds).validate(data.feeds);
+      getFeed(data.feeds);
       divWithStatusEl.innerText = i18next.t('rss.rss_done', { lng: watchedState.locale });
       divWithStatusEl.classList.remove('is-invalid');
       inputEl.classList.remove('is-invalid');
       inputEl.value = '';
       inputEl.focus();
-      getFeed(data.feeds);
       observer(watchedState);
     } catch (err) {
       divWithStatusEl.innerText = i18next.t(err.errors, { lng: watchedState.locale });

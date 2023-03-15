@@ -19,7 +19,14 @@
 
 #floatingInput {
   width: 50%;
+  height: 60px;
   display: inline-block;
+}
+
+.form-floating {
+  position: relative;
+  display: flex;
+  column-gap: 5px;
 }
 
 .title {

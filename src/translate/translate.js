@@ -5,7 +5,6 @@ import ru from './locales/ru.json';
 
 i18next.init({
   lng: watchedState.locale,
-  debug: true,
   resources: {
     en,
     ru,

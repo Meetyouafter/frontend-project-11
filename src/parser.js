@@ -28,7 +28,7 @@ const getFeedData = (state, content) => {
   };
 };
 
-const parser = (state, data) => {
+const getParseData = (state, data) => {
   const Parser = new DOMParser();
   const parseData = Parser.parseFromString(data, 'application/xml');
   getFeedData(state, parseData);
@@ -58,5 +58,5 @@ const observerParser = (data) => {
   return posts;
 };
 
-export default parser;
+export default getParseData;
 export { observerParser };

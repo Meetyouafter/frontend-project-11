@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { observerParser } from './parser.js';
 import { observerRender, watchedState } from './render.js';
 
@@ -9,15 +10,21 @@ const observer = (state) => {
       .then((response) => response.json())
       .then((data) => observerParser(data.contents))
       .then((posts) => {
-        const titles = watchedState.posts.map((post) => post.title);
-        return posts.map((post) => (!titles.includes(post.title) ? watchedState.newPosts.push(post) : ''));
-      })
-      .then(() => observerRender(watchedState));
+        const titles = state.posts.map((post) => post.title);
+        posts.filter((post) => {
+          if (!titles.includes(post.title)) {
+            state.newPosts.push(post);
+            state.posts.push(post);
+          }
+          observerRender(state);
+          state.newPosts.length = 0;
+        });
+      });
     return promise;
   });
   Promise.all(promises)
     .then(() => timer(() => observer(state), 5000))
-    .catch(clearTimeout(timer));
+    .catch(() => console.warn(i18next.t('network', { lng: watchedState.locale })));
 };
 
 export default observer;
