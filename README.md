@@ -5,7 +5,7 @@
 
 #### Rss Reader is a service for aggregating RSS feeds, with the help of which it is convenient to read a variety of sources, for example, blogs. He allows you to add an unlimited number of RSS feeds, updates them himself and adds new entries to the general stream, noting what he has read. It is possible to go to the page with the full information of the post.
 
-Preview: https://rss-agregator-steel.vercel.app/
+Preview: https://rss-three-flame.vercel.app/
 
 #### Installation and Startup Guide:
 
