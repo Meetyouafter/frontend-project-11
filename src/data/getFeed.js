@@ -1,7 +1,7 @@
 import i18next from 'i18next';
-import render, { watchedState } from './render.js';
-import parser from './parser.js';
-import getFeedData from './data/getFeedData.js';
+import render, { watchedState } from '../render/render.js';
+import parser from '../services/parser.js';
+import getFeedData from './getFeedData.js';
 
 const getElForNetworkErr = () => {
   const bodyEl = document.querySelector('.body');

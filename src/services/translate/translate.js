@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import { watchedState } from '../render.js';
+import { watchedState } from '../../render/render.js';
 import en from './locales/en.json';
 import ru from './locales/ru.json';
 

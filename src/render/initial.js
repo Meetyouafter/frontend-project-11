@@ -1,9 +1,9 @@
 import i18next from 'i18next';
-import { inputSchema, repeatSchema } from './validation.js';
-import changeLanguage from './translate/translate.js';
-import getFeed from './getFeed.js';
+import { inputSchema, repeatSchema } from '../services/validation.js';
+import changeLanguage from '../services/translate/translate.js';
+import getFeed from '../data/getFeed.js';
 import { watchedState } from './render.js';
-import observer from './observer.js';
+import observer from '../observer.js';
 
 const getInitialRender = () => {
   const inputEl = document.querySelector('#floatingInput');

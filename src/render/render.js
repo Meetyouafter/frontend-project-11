@@ -29,7 +29,9 @@ const getInitstate = () => ({
 
 const state2 = {
   locale: 'ru',
-
+  feeds: [],
+  content: [],
+  newPosts: [],
   queryForm: {
     value: '',
     valid: true,
