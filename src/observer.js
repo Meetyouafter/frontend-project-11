@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import { observerParser } from './parser.js';
+import observerParser from './parser.js';
 import { observerRender, watchedState } from './render.js';
 
 const timer = (func, time) => setTimeout(func, time);
