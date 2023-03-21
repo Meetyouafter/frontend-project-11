@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import render, { watchedState } from '../render/render.js';
 import parser from '../services/parser.js';
-import getFeedData from './getFeedData.js';
+import getParseFeedData from './getFeedData.js';
 
 const getElForNetworkErr = () => {
   const bodyEl = document.querySelector('.body');
@@ -38,7 +38,7 @@ const getFeed = async (url) => {
         return;
       }
       const parseData = parser(data.contents);
-      getFeedData(watchedState, parseData);
+      getParseFeedData(watchedState, parseData);
     })
     .then(() => render(watchedState))
     .catch((error) => {

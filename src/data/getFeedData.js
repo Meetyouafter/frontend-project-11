@@ -12,7 +12,7 @@ const getPostsData = (state, items, id) => items.map((item) => {
   };
 });
 
-const getFeedData = (state, content) => {
+const getParseFeedData = (state, content) => {
   const id = uuidv4();
   const feedData = content.querySelector('channel');
   const feedTitleEl = feedData.querySelector('title').textContent;
@@ -28,4 +28,4 @@ const getFeedData = (state, content) => {
   };
 };
 
-export default getFeedData;
+export default getParseFeedData;

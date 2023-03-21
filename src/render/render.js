@@ -1,17 +1,6 @@
 import onChange from 'on-change';
-
-const modalWindowView = (uiState) => {
-  const modalData = uiState.uiState.modalWindow;
-  const [title, description, link] = modalData;
-  const modal = document.querySelector('#modal');
-  const modalTitle = modal.querySelector('.modal-title');
-  modalTitle.textContent = title;
-  const modalBody = modal.querySelector('.modal-body');
-  modalBody.textContent = description;
-  const readButton = modal.querySelector('[target="_blank"]');
-  readButton.setAttribute('href', link);
-  return modal;
-};
+import { modalWindowView, modalButtonView } from './modal.js';
+import feedDataView from './feed.js';
 
 const getInitstate = () => ({
   locale: 'ru',
@@ -49,7 +38,7 @@ const watchedState = onChange(state, (path, value, previousValue) => {
   console.log(this, path, previousValue, value);
   const bodyEl = document.querySelector('.body');
   if (path === 'uiState.modalWindow') {
-    const modalWindow = modalWindowView(watchedState);
+    const modalWindow = modalWindowView(watchedState.uiState.modalWindow);
     const modalButton = document.querySelector('.btn-outline-secondary');
     modalButton.addEventListener('click', async () => {
       await bodyEl.prepend(modalWindow);
@@ -70,28 +59,6 @@ const feedsPrimaryTitleEL = document.createElement('p');
 feedsPrimaryTitleEL.classList.add('primary_title');
 feedsPrimaryTitleEL.innerText = 'Фиды';
 feedsEl.append(feedsPrimaryTitleEL);
-
-const modalButtonView = () => {
-  const postButton = document.createElement('button');
-  postButton.classList.add('btn', 'btn-outline-secondary');
-  postButton.setAttribute('data-bs-toggle', 'modal');
-  postButton.setAttribute('data-bs-target', '#modal');
-  postButton.innerText = 'Просмотр';
-  return postButton;
-};
-
-const feedDataView = (contents) => {
-  const contentForRender = contents[contents.length - 1];
-  const bodyEl = document.querySelector('.body');
-  const h2El = document.createElement('h2');
-  const h3El = document.createElement('h3');
-  h2El.textContent = contentForRender.title;
-  h3El.textContent = contentForRender.description;
-  feedsEl.append(h2El);
-  feedsEl.append(h3El);
-  bodyEl.append(feedsEl);
-  return bodyEl;
-};
 
 const renderPost = (post) => {
   const bodyEl = document.querySelector('.body');
@@ -128,7 +95,7 @@ const renderPost = (post) => {
 };
 
 const render = (watchState) => {
-  feedDataView(watchState.content);
+  feedDataView(feedsEl, watchState.content);
   watchState.posts.map((post) => renderPost(post));
 };
 
