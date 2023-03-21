@@ -1,5 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
 
+const parser = (data) => {
+  const Parser = new DOMParser();
+  const parseData = Parser.parseFromString(data, 'application/xml');
+  return parseData;
+};
+
 const getPostsData = (state, items, id) => items.map((item) => {
   const title = item.querySelector('title').textContent;
   const description = item.querySelector('description').textContent;
@@ -29,8 +35,7 @@ const getFeedData = (state, content) => {
 };
 
 const getParseData = (state, data) => {
-  const Parser = new DOMParser();
-  const parseData = Parser.parseFromString(data, 'application/xml');
+  const parseData = parser(data);
   getFeedData(state, parseData);
   return parseData;
 };
@@ -52,8 +57,7 @@ const getPostsDataForNewPost = async (content) => {
 };
 
 const observerParser = (data) => {
-  const Parser = new DOMParser();
-  const parseData = Parser.parseFromString(data, 'application/xml');
+  const parseData = parser(data);
   const posts = getPostsDataForNewPost(parseData);
   return posts;
 };
