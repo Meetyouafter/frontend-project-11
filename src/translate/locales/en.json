@@ -11,9 +11,9 @@
         "title": "RSS agregator",
         "description": "Let's start to read the RSS now! It is easy end beautiful.",
         "button": "Add",
-        "input": "RSS link",
+        "label": "RSS link",
         "example": "Example: https://ru.hexlet.io/lessons.rss",
-        "choiseLang": "Choise language"
+        "language": "Choise language"
       },
       "network": "Network error"
     }

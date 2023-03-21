@@ -11,9 +11,9 @@
       "title": "RSS агрегатор",
       "description": "Начните читать RSS сегодня! Это легко, это красиво.",
       "button": "Добавить",
-      "input": "Ссылка RSS",
+      "label": "Ссылка RSS",
       "example": "Пример: https://ru.hexlet.io/lessons.rss",
-      "choiseLang": "Выбор языка"
+      "language": "Выбор языка"
     },
     "network": "Ошибка сети"
   }

@@ -27,6 +27,20 @@ const getInitstate = () => ({
   data: {},
 });
 
+const state2 = {
+  locale: 'ru',
+
+  queryForm: {
+    value: '',
+    valid: true,
+    error: '',
+  },
+  uiState: {
+    readedPost: [],
+    modalWindow: '',
+  },
+};
+
 const state = getInitstate();
 
 const watchedState = onChange(state, (path, value, previousValue) => {
