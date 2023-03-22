@@ -5,10 +5,8 @@ import postsRender from './forms/posts/postsRender.js';
 import feedsRender from './forms/feeds/feedsRender.js';
 import getFormError from '../actions/getFormError.js';
 import interfaceView from './interfaceView.js';
-import { modalWindowView } from './renderModal.js';
 
 const render = (elements, i18Instance, state) => (path, value) => {
-  console.log(path, value);
   switch (path) {
     case 'language':
       interfaceView(elements, state, i18Instance);
@@ -23,7 +21,6 @@ const render = (elements, i18Instance, state) => (path, value) => {
       postsRender(elements, state);
       break;
     case 'uiState.openPostId':
-      modalWindowView(state);
       modalView(elements, state);
       break;
     case 'processError':

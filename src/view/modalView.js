@@ -15,23 +15,10 @@ const modalView = (elements, state) => {
     description.textContent = post.description;
   };
 
-  const handleCloseClick = () => {
-    body.classList.remove('modal-open');
-    modalContainer.classList.remove('show');
-    modalContainer.style.display = 'none';
-    readBtn.href = '#';
-  };
-
-  if (id === null) {
-    handleCloseClick();
-  }
-
-  if (id > 0) {
-    const currentLink = document.querySelector(`a[data-id="${id}"]`);
-    currentLink.classList.remove('fw-bold');
-    currentLink.classList.add('fw-normal', 'link-secondary');
-    handleOpenClick(openPost);
-  }
+  const currentLink = document.querySelector(`a[data-id="${id}"]`);
+  currentLink.classList.remove('fw-bold');
+  currentLink.classList.add('fw-normal', 'link-secondary');
+  handleOpenClick(openPost);
 };
 
 export default modalView;
