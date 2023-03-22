@@ -1,4 +1,4 @@
-name: eslint CI
+name: linter-check
 on:
   push:
     branches: [ "main" ]
@@ -8,7 +8,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      # Runs a single command using the runners shell
       - name: Run a eslint check
         run: make lint
