@@ -7,9 +7,9 @@ const modalView = (elements, state) => {
   const openPost = state.posts.find((post) => post.idItem === id);
 
   const handleOpenClick = (post) => {
-    body.classList.add('modal-open');
-    modalContainer.classList.add('show');
-    modalContainer.style.display = 'block';
+    // body.classList.add('modal-open');
+    // modalContainer.classList.add('show');
+    // modalContainer.style.display = 'block';
     readBtn.href = post.link;
     title.textContent = post.title;
     description.textContent = post.description;
