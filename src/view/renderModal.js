@@ -1,4 +1,5 @@
 const modalWindowView = (data) => {
+  console.log(data)
   const [title, description, link] = data;
   const modal = document.querySelector('#modal');
   const modalTitle = modal.querySelector('.modal-title');

@@ -5,6 +5,7 @@ import renderPosts from './render-posts.js';
 import renderFeeds from './render-feeds.js';
 import handleProcessError from './process-error.js';
 import renderInterface from './render-interface.js';
+import { modalWindowView } from './renderModal.js';
 
 const render = (elements, i18Instance, state) => (path, value) => {
   console.log(path, value);
@@ -22,6 +23,7 @@ const render = (elements, i18Instance, state) => (path, value) => {
       renderPosts(elements, state);
       break;
     case 'uiState.openPostId':
+      modalWindowView(state);
       renderModal(elements, state);
       break;
     case 'processError':
