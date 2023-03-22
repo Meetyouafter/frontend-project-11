@@ -1,11 +1,12 @@
 import * as yup from 'yup';
 import axios from 'axios';
-import getParsedRSS from '../parser.js';
-import validateUrl from '../validate.js';
-import { getFeedsLinks, proxyUrl } from '../utils.js';
-import { elements, ProcessState } from '../consts.js';
+import parser from '../utils/parser.js';
+import validate from '../utils/validate.js';
+import { getFeedsLinks, proxyUrl } from '../utils/api.js';
+import elements from '../utils/elements.js';
+import ProcessState from '../utils/process.js';
 
-const controllerForm = (watchedState, i18Instance) => {
+const formAction = (watchedState, i18Instance) => {
   yup.setLocale({
     string: {
       required: i18Instance.t('form.required'),
@@ -21,16 +22,16 @@ const controllerForm = (watchedState, i18Instance) => {
     const formData = new FormData(evt.target);
     const linkName = formData.get(elements.input.name).trim();
     const { form, feeds, posts } = watchedState;
-    const validate = validateUrl(watchedState, i18Instance);
+    const validation = validate(watchedState, i18Instance);
     const feedsLinks = getFeedsLinks(watchedState);
 
-    validate(linkName)
+    validation(linkName)
       .then((url) => {
         axios({
           url: proxyUrl(url),
         })
           .then((response) => {
-            const data = getParsedRSS(response.data.contents, watchedState, linkName);
+            const data = parser(response.data.contents, watchedState, linkName);
             const { feedData, postsData } = data;
             posts.unshift(...postsData);
             feeds.unshift(feedData);
@@ -53,4 +54,4 @@ const controllerForm = (watchedState, i18Instance) => {
   });
 };
 
-export default controllerForm;
+export default formAction;

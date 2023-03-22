@@ -1,4 +1,4 @@
-import { ProcessState } from '../consts.js';
+import ProcessState from '../utils/process.js';
 
 const renderSuccess = (elements, i18Instance) => {
   const { feedback, input } = elements;

@@ -1,7 +1,7 @@
 import * as yup from 'yup';
-import { getFeedsLinks } from './utils.js';
+import { getFeedsLinks } from './api.js';
 
-const validateUrl = (state, i18Instance) => {
+const validate = (state, i18Instance) => {
   const feedsLinks = getFeedsLinks(state);
   const schema = yup.object({
     url: yup.string()
@@ -10,7 +10,7 @@ const validateUrl = (state, i18Instance) => {
       .notOneOf(feedsLinks, i18Instance.t('form.rssExist')),
   });
 
-  const validate = (link) => schema
+  const validateSchema = (link) => schema
     .validate({ url: link }, { abortEarly: false })
     .then(({ url }) => {
       state.form.errors = {};
@@ -21,7 +21,7 @@ const validateUrl = (state, i18Instance) => {
       throw err;
     });
 
-  return validate;
+  return validateSchema;
 };
 
-export default validateUrl;
+export default validate;

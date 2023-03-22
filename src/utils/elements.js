@@ -25,13 +25,4 @@ const elements = {
   },
 };
 
-const ProcessState = {
-  Success: 'success',
-  Error: 'error',
-  Sending: 'sending',
-  Idle: 'idle',
-};
-
-const TIME_UPDATA = 5000;
-
-export { elements, ProcessState, TIME_UPDATA };
+export default elements;

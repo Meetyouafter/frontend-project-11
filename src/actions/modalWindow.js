@@ -1,11 +1,11 @@
-import { elements } from '../consts.js';
+import elements from '../utils/elements.js';
 
-const controllerModal = (watchedState) => {
+const modalWindowAction = (watchedState) => {
   const postContaner = elements.posts;
   const { closeBtn } = elements.modal;
 
-  postContaner.addEventListener('click', (evt) => {
-    const { id } = evt.target.dataset;
+  postContaner.addEventListener('click', (e) => {
+    const { id } = e.target.dataset;
     const { visitedPosts } = watchedState.uiState;
     visitedPosts.push(id);
     watchedState.uiState.openPostId = id;
@@ -18,4 +18,4 @@ const controllerModal = (watchedState) => {
   });
 };
 
-export default controllerModal;
+export default modalWindowAction;

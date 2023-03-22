@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 
-const getParsedRSS = (content, watchedState, linkName) => {
-  const parser = new DOMParser();
-  const parsedContent = parser.parseFromString(content, 'application/xml');
+const parser = (content, watchedState, linkName) => {
+  const dataParser = new DOMParser();
+  const parsedContent = dataParser.parseFromString(content, 'application/xml');
   const parseError = parsedContent.querySelector('parsererror');
 
   if (parseError) {
@@ -33,4 +33,4 @@ const getParsedRSS = (content, watchedState, linkName) => {
   return { feedData: feed, postsData: posts };
 };
 
-export default getParsedRSS;
+export default parser;
