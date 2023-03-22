@@ -1,4 +1,6 @@
-const feedDataView = (feedsEl, contents) => {
+const feedDataView = (contents) => {
+  console.log(contents)
+  const feedsEl = document.createElement('div');
   const contentForRender = contents[contents.length - 1];
   const bodyEl = document.querySelector('.body');
   const h2El = document.createElement('h2');

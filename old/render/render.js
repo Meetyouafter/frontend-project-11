@@ -21,11 +21,6 @@ const state2 = {
   feeds: [],
   content: [],
   newPosts: [],
-  queryForm: {
-    value: '',
-    valid: true,
-    error: '',
-  },
   uiState: {
     readedPost: [],
     modalWindow: '',

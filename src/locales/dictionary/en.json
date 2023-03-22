@@ -1,0 +1,20 @@
+{
+    "translation": {
+      "form": {
+        "success": "RSS uploaded successfully",
+        "required": "This field cannot be empty",
+        "url": "Please enter a valid url",
+        "rssExist": "Such an rss already exists",
+        "badRSS": "The resource does not contain valid RSS"
+      },
+      "interface": {
+        "title": "RSS agregator",
+        "description": "Let's start to read the RSS now! It is easy end beautiful.",
+        "button": "Add",
+        "label": "RSS link",
+        "example": "Example: https://ru.hexlet.io/lessons.rss",
+        "language": "Choise language"
+      },
+      "network": "Network error"
+    }
+  }
