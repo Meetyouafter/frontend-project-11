@@ -1,10 +1,10 @@
-import createFeedsHtml from './create-feeds-html.js';
+import createFeedsHtml from './feeds_html.js';
 
-const renderFeeds = (elements, state) => {
+const feedsRender = (elements, state) => {
   const { feeds } = elements;
   feeds.innerHTML = createFeedsHtml(state.feeds);
   elements.form.reset();
   elements.input.focus();
 };
 
-export default renderFeeds;
+export default feedsRender;

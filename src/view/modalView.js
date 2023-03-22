@@ -1,4 +1,4 @@
-const renderModal = (elements, state) => {
+const modalView = (elements, state) => {
   const { body } = elements;
   const {
     modalContainer, title, description, readBtn,
@@ -34,4 +34,4 @@ const renderModal = (elements, state) => {
   }
 };
 
-export default renderModal;
+export default modalView;

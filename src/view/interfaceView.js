@@ -1,4 +1,4 @@
-const renderInterface = (elements, watchedState, i18next) => {
+const interfaceView = (elements, watchedState, i18next) => {
   const keys = Object.keys(elements.translate);
   const values = Object.values(elements.translate);
 
@@ -7,4 +7,4 @@ const renderInterface = (elements, watchedState, i18next) => {
   }
 };
 
-export default renderInterface;
+export default interfaceView;

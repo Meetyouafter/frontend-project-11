@@ -20,7 +20,7 @@ const renderErrors = (elements, state) => {
   }
 };
 
-const handleProcessState = (elements, processState, state, i18Instance) => {
+const processView = (elements, processState, state, i18Instance) => {
   const { submitButton } = elements;
   switch (processState) {
     case ProcessState.Success:
@@ -47,4 +47,4 @@ const handleProcessState = (elements, processState, state, i18Instance) => {
   }
 };
 
-export default handleProcessState;
+export default processView;

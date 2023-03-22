@@ -1,6 +1,6 @@
-import createPostsHtml from './create-posts-html.js';
+import createPostsHtml from './posts_html.js';
 
-const renderPosts = (elements, state) => {
+const postsRender = (elements, state) => {
   const { posts } = elements;
 
   if (state.uiState.visitedPosts.length > 0) {
@@ -15,4 +15,4 @@ const renderPosts = (elements, state) => {
   }
 };
 
-export default renderPosts;
+export default postsRender;

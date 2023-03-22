@@ -1,5 +1,5 @@
 import i18n from 'i18next';
-import watch from './view/watchers.js';
+import watcher from './view/watcher.js';
 import modalWindowAction from './actions/modalWindow.js';
 import formAction from './actions/form.js';
 import ru from './locale/dictionary/ru.json';
@@ -36,7 +36,7 @@ const app = () => {
     },
   };
 
-  const watchedState = watch(state, elements, i18nInstance);
+  const watchedState = watcher(state, elements, i18nInstance);
 
   observer(watchedState);
   localeButtonsAction(watchedState);
