@@ -14,7 +14,7 @@ const render = (elements, i18Instance, state) => (path, value) => {
     case 'feeds':
       feedsRender(elements, state);
       break;
-    case 'form.processState':
+    case 'form.status':
       processView(elements, value, state, i18Instance);
       break;
     case 'posts':

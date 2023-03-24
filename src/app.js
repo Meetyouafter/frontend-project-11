@@ -24,7 +24,7 @@ const app = () => {
     language: 'ru',
     form: {
       valid: false,
-      processState: 'idle',
+      status: 'idle',
       errors: '',
     },
     feeds: [],

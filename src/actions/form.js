@@ -2,9 +2,9 @@ import * as yup from 'yup';
 import axios from 'axios';
 import getParseDataWithId from '../utils/parser.js';
 import validate from '../utils/validate.js';
-import { getFeedsLinks, proxy } from '../utils/api.js';
+import { getFeedsLinks, formStatusState } from '../utils/utils.js';
+import proxy from '../utils/api.js';
 import elements from '../utils/elements.js';
-import ProcessState from '../utils/process.js';
 
 const formAction = (watchedState, i18Instance) => {
   yup.setLocale({
@@ -16,7 +16,7 @@ const formAction = (watchedState, i18Instance) => {
 
   elements.form.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    watchedState.form.processState = ProcessState.Sending;
+    watchedState.form.status = formStatusState.Sending;
     watchedState.processError = null;
 
     const formData = new FormData(evt.target);
@@ -36,19 +36,19 @@ const formAction = (watchedState, i18Instance) => {
             posts.unshift(...postsData);
             feeds.unshift(feedData);
             feedsLinks.push(link);
-            watchedState.form.processState = ProcessState.Success;
+            watchedState.form.status = formStatusState.Success;
             watchedState.processError = null;
           })
           .catch((err) => {
             form.errors = err.isParsing ? i18Instance.t('form.badRSS') : i18Instance.t('network');
-            watchedState.form.processState = ProcessState.Error;
+            watchedState.form.status = formStatusState.Error;
             throw err;
           });
       })
       .catch((err) => {
         form.valid = false;
         form.errors = err.message;
-        watchedState.form.processState = ProcessState.Error;
+        watchedState.form.status = formStatusState.Error;
         watchedState.processError = null;
       });
   });

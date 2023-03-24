@@ -1,4 +1,4 @@
-import ProcessState from '../utils/process.js';
+import { formStatusState } from '../utils/utils.js';
 
 const renderSuccess = (elements, i18Instance) => {
   const { feedback, input } = elements;
@@ -20,30 +20,30 @@ const renderErrors = (elements, state) => {
   }
 };
 
-const processView = (elements, processState, state, i18Instance) => {
+const processView = (elements, status, state, i18Instance) => {
   const { submitButton } = elements;
-  switch (processState) {
-    case ProcessState.Success:
+  switch (status) {
+    case formStatusState.Success:
       renderSuccess(elements, i18Instance);
       submitButton.disabled = false;
       state.form.errors = {};
       break;
 
-    case ProcessState.Error:
+    case formStatusState.Error:
       renderErrors(elements, state);
       submitButton.disabled = false;
       break;
 
-    case ProcessState.Sending:
+    case formStatusState.Sending:
       submitButton.disabled = true;
       break;
 
-    case ProcessState.Idle:
+    case formStatusState.Idle:
       submitButton.disabled = false;
       break;
 
     default:
-      throw new Error(`Unknown process state: ${processState}`);
+      throw new Error(`Unknown process state: ${status}`);
   }
 };
 
