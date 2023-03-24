@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 import axios from 'axios';
-import parser from '../utils/parser.js';
+import getParseDataWithId from '../utils/parser.js';
 import validate from '../utils/validate.js';
 import { getFeedsLinks, proxy } from '../utils/api.js';
 import elements from '../utils/elements.js';
@@ -31,7 +31,7 @@ const formAction = (watchedState, i18Instance) => {
           url: proxy(link),
         })
           .then((response) => {
-            const data = parser(response.data.contents, watchedState, linkName);
+            const data = getParseDataWithId(response.data.contents, linkName);
             const { feedData, postsData } = data;
             posts.unshift(...postsData);
             feeds.unshift(feedData);

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import parser from './parser.js';
+import getParseDataWithId from './parser.js';
 import { getFeedsLinks, proxy } from './api.js';
 
 const TIME_FOR_UPDATE = 5000;
@@ -12,7 +12,7 @@ const observer = (watchedState) => {
     url: proxy(link),
   })
     .then((response) => {
-      const data = parser(response.data.contents, watchedState);
+      const data = getParseDataWithId(response.data.contents);
       const { postsData } = data;
       const postsLinks = watchedState.posts.map((post) => post.link);
       const newPosts = postsData.filter((post) => !postsLinks.includes(post.link));
