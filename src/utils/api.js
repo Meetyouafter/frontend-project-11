@@ -1,5 +1,8 @@
 const getFeedsLinks = (state) => state.feeds.map((feed) => feed.linkName);
 
-const proxyUrl = (url) => `https://allorigins.hexlet.app/get?disableCache=false&url=${encodeURIComponent(url.trim())}`;
+const proxy = (link) => {
+  const url = new URL(link);
+  return `https://allorigins.hexlet.app/get?disableCache=false&url=${encodeURIComponent(url)}`;
+};
 
-export { getFeedsLinks, proxyUrl };
+export { getFeedsLinks, proxy };

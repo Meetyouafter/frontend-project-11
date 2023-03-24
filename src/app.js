@@ -27,7 +27,6 @@ const app = () => {
       processState: 'idle',
       errors: '',
     },
-    linkUrl: [],
     feeds: [],
     posts: [],
     uiState: {
