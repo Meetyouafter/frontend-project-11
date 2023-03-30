@@ -1,4 +1,9 @@
-import { formStatusState } from '../utils/utils.js';
+const formStatusState = {
+  Success: 'success',
+  Error: 'error',
+  Sending: 'sending',
+  Idle: 'idle',
+};
 
 const renderSuccess = (elements, i18Instance) => {
   const { feedback, input } = elements;
@@ -20,7 +25,7 @@ const renderErrors = (elements, state) => {
   }
 };
 
-const processView = (elements, status, state, i18Instance) => {
+const formStatusView = (elements, status, state, i18Instance) => {
   const { submitButton } = elements;
   switch (status) {
     case formStatusState.Success:
@@ -47,4 +52,5 @@ const processView = (elements, status, state, i18Instance) => {
   }
 };
 
-export default processView;
+export default formStatusView;
+export { formStatusState };

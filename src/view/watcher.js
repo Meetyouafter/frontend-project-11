@@ -1,5 +1,5 @@
 import onChange from 'on-change';
-import processView from './processView.js';
+import formStatusView from './formStatusView.js';
 import modalView from './modalView.js';
 import postsRender from './forms/posts/postsRender.js';
 import feedsRender from './forms/feeds/feedsRender.js';
@@ -15,7 +15,7 @@ const render = (elements, i18Instance, state) => (path, value) => {
       feedsRender(elements, state);
       break;
     case 'form.status':
-      processView(elements, value, state, i18Instance);
+      formStatusView(elements, value, state, i18Instance);
       break;
     case 'posts':
       postsRender(elements, state);
@@ -26,7 +26,6 @@ const render = (elements, i18Instance, state) => (path, value) => {
     case 'processError':
       getFormError(elements, i18Instance);
       break;
-
     default:
       break;
   }

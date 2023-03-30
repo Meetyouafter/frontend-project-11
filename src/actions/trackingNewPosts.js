@@ -1,13 +1,12 @@
 import axios from 'axios';
-import getParseDataWithId from './parser.js';
-import proxy from './api.js';
-import { getFeedsLinks } from './utils.js';
+import getParseDataWithId from './getParseDataWithId.js';
+import { proxy } from './form.js';
 
 const TIME_FOR_UPDATE = 5000;
 
-const observer = (watchedState) => {
+const trackingNewPosts = (watchedState) => {
   const { posts } = watchedState;
-  const feedsLinks = getFeedsLinks(watchedState);
+  const feedsLinks = watchedState.feeds.map((feed) => feed.linkName);
 
   const promises = feedsLinks.map((link) => axios({
     url: proxy(link),
@@ -24,7 +23,7 @@ const observer = (watchedState) => {
     }));
 
   Promise.all(promises)
-    .finally(() => setTimeout(() => observer(watchedState), TIME_FOR_UPDATE));
+    .finally(() => setTimeout(() => trackingNewPosts(watchedState), TIME_FOR_UPDATE));
 };
 
-export default observer;
+export default trackingNewPosts;

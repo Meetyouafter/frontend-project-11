@@ -2,11 +2,14 @@ import i18n from 'i18next';
 import watcher from './view/watcher.js';
 import modalWindowAction from './actions/modalWindow.js';
 import formAction from './actions/form.js';
-import ru from './locale/dictionary/ru.json';
-import en from './locale/dictionary/en.json';
-import elements from './utils/elements.js';
-import observer from './utils/observer.js';
-import localeButtonsAction from './actions/localeButtons.js';
+import ru from './dictionary/ru.json';
+import en from './dictionary/en.json';
+import elements from './view/elements.js';
+import trackingNewPosts from './actions/trackingNewPosts.js';
+
+const changeLanguage = (value, state) => {
+  state.language = value;
+};
 
 const app = () => {
   const i18nInstance = i18n.createInstance();
@@ -37,8 +40,15 @@ const app = () => {
 
   const watchedState = watcher(state, elements, i18nInstance);
 
-  observer(watchedState);
-  localeButtonsAction(watchedState);
+  elements.buttonEn.addEventListener('click', () => {
+    changeLanguage('en', watchedState);
+  });
+
+  elements.buttonRu.addEventListener('click', () => {
+    changeLanguage('ru', watchedState);
+  });
+
+  trackingNewPosts(watchedState);
   formAction(watchedState, i18nInstance);
   modalWindowAction(watchedState);
 };

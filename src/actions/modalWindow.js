@@ -1,4 +1,4 @@
-import elements from '../utils/elements.js';
+import elements from '../view/elements.js';
 
 const modalWindowAction = (watchedState) => {
   const postContaner = elements.posts;

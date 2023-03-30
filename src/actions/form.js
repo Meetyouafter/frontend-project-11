@@ -1,10 +1,18 @@
 import * as yup from 'yup';
 import axios from 'axios';
-import getParseDataWithId from '../utils/parser.js';
-import validationSchema from '../utils/validate.js';
-import { getFeedsLinks, formStatusState } from '../utils/utils.js';
-import proxy from '../utils/api.js';
-import elements from '../utils/elements.js';
+import getParseDataWithId from './getParseDataWithId.js';
+import validationSchema from './validation.js';
+import { formStatusState } from '../view/formStatusView.js';
+import elements from '../view/elements.js';
+
+const BASE_URL = 'https://allorigins.hexlet.app';
+
+const proxy = (url) => {
+  const proxyUrl = new URL('/get', BASE_URL);
+  proxyUrl.searchParams.append('disableCache', 'true');
+  proxyUrl.searchParams.append('url', url);
+  return proxyUrl;
+};
 
 const formAction = (watchedState, i18Instance) => {
   yup.setLocale({
@@ -22,8 +30,8 @@ const formAction = (watchedState, i18Instance) => {
     const formData = new FormData(evt.target);
     const linkName = formData.get(elements.input.name).trim();
     const { form, feeds, posts } = watchedState;
-    const validation = validationSchema(getFeedsLinks(watchedState), i18Instance);
-    const feedsLinks = getFeedsLinks(watchedState);
+    const feedsLinks = watchedState.feeds.map((feed) => feed.linkName);
+    const validation = validationSchema(feedsLinks, i18Instance);
 
     validation(watchedState, linkName)
       .then((link) => {
@@ -55,3 +63,4 @@ const formAction = (watchedState, i18Instance) => {
 };
 
 export default formAction;
+export { proxy };
