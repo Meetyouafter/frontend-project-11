@@ -1,4 +1,4 @@
-const modalView = (elements, state) => {
+const modalWindowView = (elements, state) => {
   const {
     title, description, readBtn,
   } = elements.modal;
@@ -13,4 +13,4 @@ const modalView = (elements, state) => {
   currentLink.classList.add('fw-normal', 'link-secondary');
 };
 
-export default modalView;
+export default modalWindowView;
