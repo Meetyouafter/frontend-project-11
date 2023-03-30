@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-const parser = (content) => {
+const parse = (content) => {
   const dataParser = new DOMParser();
   const parsedContent = dataParser.parseFromString(content, 'application/xml');
   const parseError = parsedContent.querySelector('parsererror');
@@ -15,7 +15,7 @@ const parser = (content) => {
 };
 
 const getParseData = (content, linkName) => {
-  const parsedContent = parser(content);
+  const parsedContent = parse(content);
 
   const feedTitle = parsedContent.querySelector('title').textContent;
   const feedDescription = parsedContent.querySelector('description').textContent;
@@ -40,7 +40,6 @@ const getParseData = (content, linkName) => {
 const getParseDataWithId = (content, linkName) => {
   const { feedData, postsData } = getParseData(content, linkName);
   const feedId = uuidv4();
-  const idItem = uuidv4();
 
   const feedDataWithId = {
     ...feedData,
@@ -49,7 +48,7 @@ const getParseDataWithId = (content, linkName) => {
 
   const postDataWithId = postsData.map((el) => {
     el.feedId = feedId;
-    el.idItem = idItem;
+    el.idItem = uuidv4();
     return el;
   });
 
