@@ -1,9 +1,15 @@
 import * as yup from 'yup';
 import axios from 'axios';
-import getParseDataWithId from './getParseDataWithId.js';
+import addIdToFeedData from './addIdToFeedData.js';
 import validationSchema from './validation.js';
-import { formStatusState } from '../view/formStatusView.js';
 import elements from '../view/elements.js';
+
+const formStatuses = {
+  success: 'success',
+  error: 'error',
+  sending: 'sending',
+  idle: 'idle',
+};
 
 const BASE_URL = 'https://allorigins.hexlet.app';
 
@@ -24,7 +30,7 @@ const getFeedData = (watchedState, i18Instance) => {
 
   elements.form.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    watchedState.form.status = formStatusState.Sending;
+    watchedState.form.status = formStatuses.sending;
     watchedState.processError = null;
 
     const formData = new FormData(evt.target);
@@ -39,28 +45,28 @@ const getFeedData = (watchedState, i18Instance) => {
           url: proxy(link),
         })
           .then((response) => {
-            const data = getParseDataWithId(response.data.contents, linkName);
+            const data = addIdToFeedData(response.data.contents, linkName);
             const { feedData, postsData } = data;
             posts.unshift(...postsData);
             feeds.unshift(feedData);
             feedsLinks.push(link);
-            watchedState.form.status = formStatusState.Success;
+            watchedState.form.status = formStatuses.success;
             watchedState.processError = null;
           })
           .catch((err) => {
             form.errors = err.isParsing ? i18Instance.t('form.badRSS') : i18Instance.t('network');
-            watchedState.form.status = formStatusState.Error;
+            watchedState.form.status = formStatuses.error;
             throw err;
           });
       })
       .catch((err) => {
         form.valid = false;
         form.errors = err.message;
-        watchedState.form.status = formStatusState.Error;
+        watchedState.form.status = formStatuses.error;
         watchedState.processError = null;
       });
   });
 };
 
 export default getFeedData;
-export { proxy };
+export { proxy, formStatuses };

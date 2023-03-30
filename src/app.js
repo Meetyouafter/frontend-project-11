@@ -1,11 +1,11 @@
 import i18n from 'i18next';
-import watcher from './view/watcher.js';
+import observationAppState from './actions/observationAppState.js';
 import getOpenedPostData from './actions/getOpenedPostData.js';
 import getFeedData from './actions/getFeedData.js';
 import ru from './dictionary/ru.json';
 import en from './dictionary/en.json';
 import elements from './view/elements.js';
-import trackingNewPosts from './actions/trackingNewPosts.js';
+import observationNewPosts from './actions/observationNewPosts.js';
 
 const changeLanguage = (value, state) => {
   state.language = value;
@@ -38,7 +38,7 @@ const app = () => {
     },
   };
 
-  const watchedState = watcher(state, elements, i18nInstance);
+  const watchedState = observationAppState(state, elements, i18nInstance);
 
   elements.buttonEn.addEventListener('click', () => {
     changeLanguage('en', watchedState);
@@ -48,7 +48,7 @@ const app = () => {
     changeLanguage('ru', watchedState);
   });
 
-  trackingNewPosts(watchedState);
+  observationNewPosts(watchedState);
   getFeedData(watchedState, i18nInstance);
   getOpenedPostData(watchedState);
 };

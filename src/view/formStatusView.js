@@ -1,9 +1,4 @@
-const formStatusState = {
-  Success: 'success',
-  Error: 'error',
-  Sending: 'sending',
-  Idle: 'idle',
-};
+import { formStatuses } from '../actions/getFeedData.js';
 
 const renderSuccess = (elements, i18Instance) => {
   const { feedback, input } = elements;
@@ -28,22 +23,22 @@ const renderErrors = (elements, state) => {
 const formStatusView = (elements, status, state, i18Instance) => {
   const { submitButton } = elements;
   switch (status) {
-    case formStatusState.Success:
+    case formStatuses.success:
       renderSuccess(elements, i18Instance);
       submitButton.disabled = false;
       state.form.errors = {};
       break;
 
-    case formStatusState.Error:
+    case formStatuses.error:
       renderErrors(elements, state);
       submitButton.disabled = false;
       break;
 
-    case formStatusState.Sending:
+    case formStatuses.sending:
       submitButton.disabled = true;
       break;
 
-    case formStatusState.Idle:
+    case formStatuses.idle:
       submitButton.disabled = false;
       break;
 
@@ -53,4 +48,3 @@ const formStatusView = (elements, status, state, i18Instance) => {
 };
 
 export default formStatusView;
-export { formStatusState };
