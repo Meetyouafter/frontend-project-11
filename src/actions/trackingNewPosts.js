@@ -1,6 +1,6 @@
 import axios from 'axios';
 import getParseDataWithId from './getParseDataWithId.js';
-import { proxy } from './form.js';
+import { proxy } from './getFeedData.js';
 
 const TIME_FOR_UPDATE = 5000;
 

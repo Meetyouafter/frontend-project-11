@@ -14,7 +14,7 @@ const proxy = (url) => {
   return proxyUrl;
 };
 
-const formAction = (watchedState, i18Instance) => {
+const getFeedData = (watchedState, i18Instance) => {
   yup.setLocale({
     string: {
       required: i18Instance.t('form.required'),
@@ -62,5 +62,5 @@ const formAction = (watchedState, i18Instance) => {
   });
 };
 
-export default formAction;
+export default getFeedData;
 export { proxy };

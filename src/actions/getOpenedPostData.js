@@ -1,6 +1,6 @@
 import elements from '../view/elements.js';
 
-const modalWindowAction = (watchedState) => {
+const getOpenedPostData = (watchedState) => {
   const postContaner = elements.posts;
   const { closeBtn } = elements.modal;
 
@@ -18,4 +18,4 @@ const modalWindowAction = (watchedState) => {
   });
 };
 
-export default modalWindowAction;
+export default getOpenedPostData;

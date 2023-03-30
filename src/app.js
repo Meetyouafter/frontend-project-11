@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import watcher from './view/watcher.js';
-import modalWindowAction from './actions/modalWindow.js';
-import formAction from './actions/form.js';
+import getOpenedPostData from './actions/getOpenedPostData.js';
+import getFeedData from './actions/getFeedData.js';
 import ru from './dictionary/ru.json';
 import en from './dictionary/en.json';
 import elements from './view/elements.js';
@@ -49,8 +49,8 @@ const app = () => {
   });
 
   trackingNewPosts(watchedState);
-  formAction(watchedState, i18nInstance);
-  modalWindowAction(watchedState);
+  getFeedData(watchedState, i18nInstance);
+  getOpenedPostData(watchedState);
 };
 
 export default app;
