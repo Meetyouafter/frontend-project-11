@@ -33,7 +33,7 @@ const app = () => {
     feeds: [],
     posts: [],
     uiState: {
-      openPostId: null,
+      openPostData: null,
       visitedPosts: [],
     },
   };

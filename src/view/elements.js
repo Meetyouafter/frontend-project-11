@@ -9,7 +9,6 @@ const elements = {
   posts: document.querySelector('.posts'),
   feedback: document.querySelector('.feedback'),
   modal: {
-    modalContainer: document.querySelector('.modal'),
     title: document.querySelector('.modal-title'),
     description: document.querySelector('.modal-body'),
     readBtn: document.querySelector('.full-article'),

@@ -26,7 +26,7 @@ const renderingApp = (elements, i18Instance, state) => (path, value) => {
     case 'posts':
       postsRender(elements, state);
       break;
-    case 'uiState.openPostId':
+    case 'uiState.openPostData':
       modalView(elements, state);
       break;
     case 'processError':
