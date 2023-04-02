@@ -28,20 +28,16 @@ const formStatusView = (elements, status, state, i18Instance) => {
       submitButton.disabled = false;
       state.form.errors = {};
       break;
-
     case formStatuses.error:
       renderErrors(elements, state);
       submitButton.disabled = false;
       break;
-
     case formStatuses.sending:
       submitButton.disabled = true;
       break;
-
     case formStatuses.idle:
       submitButton.disabled = false;
       break;
-
     default:
       throw new Error(`Unknown process state: ${status}`);
   }

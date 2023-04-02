@@ -1,6 +1,5 @@
 import i18n from 'i18next';
 import observationAppState from './actions/observationAppState.js';
-import getOpenedPostData from './actions/getOpenedPostData.js';
 import getFeedData from './actions/getFeedData.js';
 import ru from './dictionary/ru.json';
 import en from './dictionary/en.json';
@@ -50,7 +49,6 @@ const app = () => {
 
   observationNewPosts(watchedState);
   getFeedData(watchedState, i18nInstance);
-  getOpenedPostData(watchedState);
 };
 
 export default app;

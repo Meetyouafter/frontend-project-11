@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import axios from 'axios';
-import addIdToFeedData from './addIdToFeedData.js';
-import validationSchema from './validation.js';
+import { v4 as uuidv4 } from 'uuid';
+import getParseData from './getParseData.js';
 import elements from '../view/elements.js';
 
 const formStatuses = {
@@ -20,6 +20,46 @@ const proxy = (url) => {
   return proxyUrl;
 };
 
+const validationSchema = (feedsLinks, i18Instance) => {
+  const schema = yup.object({
+    url: yup.string()
+      .required()
+      .url()
+      .notOneOf(feedsLinks, i18Instance.t('form.rssExist')),
+  });
+
+  const validation = (state, link) => schema
+    .validate({ url: link }, { abortEarly: false })
+    .then(({ url }) => {
+      state.form.errors = {};
+
+      return Promise.resolve(url);
+    })
+    .catch((err) => {
+      throw err;
+    });
+
+  return validation;
+};
+
+const addIdToFeedData = (content, linkName) => {
+  const { feedData, postsData } = getParseData(content, linkName);
+  const feedId = uuidv4();
+
+  const feedDataWithId = {
+    ...feedData,
+    feedId,
+  };
+
+  const postDataWithId = postsData.map((el) => {
+    el.feedId = feedId;
+    el.idItem = uuidv4();
+    return el;
+  });
+
+  return { feedData: feedDataWithId, postsData: postDataWithId };
+};
+
 const getFeedData = (watchedState, i18Instance) => {
   yup.setLocale({
     string: {
@@ -27,6 +67,9 @@ const getFeedData = (watchedState, i18Instance) => {
       url: i18Instance.t('form.url'),
     },
   });
+
+  const postContaner = elements.posts;
+  const { closeBtn } = elements.modal;
 
   elements.form.addEventListener('submit', (evt) => {
     evt.preventDefault();
@@ -66,7 +109,28 @@ const getFeedData = (watchedState, i18Instance) => {
         watchedState.processError = null;
       });
   });
+
+  postContaner.addEventListener('click', (e) => {
+    const { id } = e.target.dataset;
+    const { visitedPosts } = watchedState.uiState;
+
+    const openPost = watchedState.posts.find((post) => post.idItem === id);
+
+    watchedState.uiState.openPostData = {
+      id,
+      title: openPost.title,
+      description: openPost.description,
+      link: openPost.link,
+    };
+    visitedPosts.push(id);
+  });
+
+  closeBtn.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      watchedState.uiState.openPostData = null;
+    });
+  });
 };
 
 export default getFeedData;
-export { proxy, formStatuses };
+export { proxy, formStatuses, addIdToFeedData };

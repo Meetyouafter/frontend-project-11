@@ -1,6 +1,5 @@
 import axios from 'axios';
-import addIdToFeedData from './addIdToFeedData.js';
-import { proxy } from './getFeedData.js';
+import { addIdToFeedData, proxy } from './getFeedData.js';
 
 const TIME_FOR_UPDATE = 5000;
 

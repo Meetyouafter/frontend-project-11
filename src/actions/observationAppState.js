@@ -1,9 +1,8 @@
 import onChange from 'on-change';
 import formStatusView from '../view/formStatusView.js';
 import modalWindowView from '../view/modalWindowView.js';
-import postsRender from '../view/forms/posts/postsRender.js';
-import feedsRender from '../view/forms/feeds/feedsRender.js';
 import interfaceLanguageView from '../view/interfaceLanguageView.js';
+import feedDataView from '../view/feedDataView.js';
 
 const getFormError = (elements, i18Instance) => {
   const { feedback, submitButton } = elements;
@@ -18,13 +17,11 @@ const renderingApp = (elements, i18Instance, state) => (path, value) => {
       interfaceLanguageView(elements, state, i18Instance);
       break;
     case 'feeds':
-      feedsRender(elements, state);
+    case 'posts':
+      feedDataView(elements, state);
       break;
     case 'form.status':
       formStatusView(elements, value, state, i18Instance);
-      break;
-    case 'posts':
-      postsRender(elements, state);
       break;
     case 'uiState.openPostData':
       modalWindowView(elements, state);
