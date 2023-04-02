@@ -7,6 +7,10 @@
 
 Preview: https://rss-three-flame.vercel.app/
 
+#### System requirements:
+##### node.js >= v18.12.0
+##### npm >= v8.19.2
+
 #### Installation and Startup Guide:
 
 _clone_ this repository to your ide;
