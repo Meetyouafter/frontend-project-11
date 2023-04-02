@@ -3,7 +3,7 @@ import { addIdToFeedData, proxy } from './getFeedData.js';
 
 const TIME_FOR_UPDATE = 5000;
 
-const observationNewPosts = (watchedState) => {
+const getNewPosts = (watchedState) => {
   const { posts } = watchedState;
   const feedsLinks = watchedState.feeds.map((feed) => feed.linkName);
 
@@ -22,7 +22,7 @@ const observationNewPosts = (watchedState) => {
     }));
 
   Promise.all(promises)
-    .finally(() => setTimeout(() => observationNewPosts(watchedState), TIME_FOR_UPDATE));
+    .finally(() => setTimeout(() => getNewPosts(watchedState), TIME_FOR_UPDATE));
 };
 
-export default observationNewPosts;
+export default getNewPosts;
