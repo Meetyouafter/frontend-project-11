@@ -1,5 +1,3 @@
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import * as yup from 'yup';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,11 +6,37 @@ import i18n from 'i18next';
 import getParseData from './actions/getParseData.js';
 import ru from './dictionary/ru.json';
 import en from './dictionary/en.json';
-import elements from './view/elements.js';
 import getNewPosts from './actions/getNewPosts.js';
 import formStatusView from './view/formStatusView.js';
 import feedDataView from './view/feedDataView.js';
 import { interfaceLanguageView, modalWindowView } from './view/otherView.js';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+const elements = {
+  body: document.querySelector('body'),
+  form: document.querySelector('.rss-form'),
+  input: document.querySelector('.form-control'),
+  submitButton: document.querySelector('[type="submit"]'),
+  buttonEn: document.querySelector('.btn_enLang'),
+  buttonRu: document.querySelector('.btn_ruLang'),
+  feeds: document.querySelector('.feeds'),
+  posts: document.querySelector('.posts'),
+  feedback: document.querySelector('.feedback'),
+  modal: {
+    title: document.querySelector('.modal-title'),
+    description: document.querySelector('.modal-body'),
+    readBtn: document.querySelector('.full-article'),
+  },
+  translate: {
+    description: document.querySelector('.description'),
+    title: document.querySelector('.title'),
+    label: document.querySelector('.label'),
+    button: document.querySelector('.button'),
+    example: document.querySelector('.example'),
+    language: document.querySelector('.language'),
+  },
+};
 
 const formStatuses = {
   success: 'success',
@@ -53,6 +77,28 @@ const addIdToFeedData = (content, linkName) => {
   });
 
   return { feedData: feedDataWithId, postsData: postDataWithId };
+};
+
+const validationSchema = (watchState, feedsLinks, i18Instance) => {
+  const schema = yup.object({
+    url: yup.string()
+      .required()
+      .url()
+      .notOneOf(feedsLinks, i18Instance.t('form.rssExist', { lng: watchState.language })),
+  });
+
+  const validation = (InitState, link) => schema
+    .validate({ url: link }, { abortEarly: false })
+    .then(({ url }) => {
+      InitState.form.errors = {};
+
+      return Promise.resolve(url);
+    })
+    .catch((err) => {
+      throw err;
+    });
+
+  return validation;
 };
 
 const renderingApp = (nodes, i18Instance, state) => (path, value) => {
@@ -132,29 +178,7 @@ const app = () => {
   });
 
   const postContaner = elements.posts;
-  const { closeBtn } = elements.modal;
-
-  const validationSchema = (watchState, feedsLinks, i18Instance) => {
-    const schema = yup.object({
-      url: yup.string()
-        .required()
-        .url()
-        .notOneOf(feedsLinks, i18Instance.t('form.rssExist', { lng: watchState.language })),
-    });
-
-    const validation = (InitState, link) => schema
-      .validate({ url: link }, { abortEarly: false })
-      .then(({ url }) => {
-        InitState.form.errors = {};
-
-        return Promise.resolve(url);
-      })
-      .catch((err) => {
-        throw err;
-      });
-
-    return validation;
-  };
+  const modal = document.querySelector('#modal');
 
   elements.form.addEventListener('submit', (evt) => {
     evt.preventDefault();
@@ -201,10 +225,10 @@ const app = () => {
     visitedPosts.push(id);
   });
 
-  closeBtn.forEach((btn) => {
-    btn.addEventListener('click', () => {
+  modal.addEventListener('click', (e) => {
+    if (e.target.dataset.bsDismiss === 'modal') {
       watchedState.uiState.openPostData = null;
-    });
+    }
   });
 
   getNewPosts(watchedState);
