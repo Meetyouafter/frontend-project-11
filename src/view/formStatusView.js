@@ -22,9 +22,9 @@ const renderErrors = (elements, i18Instance, state) => {
     input.classList.add('is-invalid');
     feedback.classList.remove('text-success');
     feedback.classList.add('text-danger');
-    if (String(state.form.errors) === 'ValidationError: url') {
-      feedback.textContent = i18Instance.t('form.url', { lng: state.language });
-    } if (String(state.form.errors) === 'ValidationError: rssExist') {
+    if (String(state.form.errors) === 'ValidationError: rssExist') {
+      feedback.textContent = i18Instance.t('form.rssExist', { lng: state.language });
+    } else if (String(state.form.errors) === 'ValidationError: url') {
       feedback.textContent = i18Instance.t('form.url', { lng: state.language });
     } else {
       feedback.textContent = i18Instance.t(`form.${state.form.errors}`, { lng: state.language });

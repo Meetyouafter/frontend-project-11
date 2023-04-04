@@ -126,7 +126,7 @@ const app = () => {
   const i18nInstance = i18n.createInstance();
   i18nInstance.init({
     lng: 'ru',
-    debug: true,
+    debug: false,
     resources: {
       en,
       ru,
