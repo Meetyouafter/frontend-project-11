@@ -13,7 +13,9 @@
         "button": "Add",
         "label": "RSS link",
         "example": "Example: https://ru.hexlet.io/lessons.rss",
-        "language": "Choise language"
+        "language": "Choise language",
+        "feedsTitle": "Feeds",
+        "postsTitle": "Posts"
       },
       "network": "Network error"
     }

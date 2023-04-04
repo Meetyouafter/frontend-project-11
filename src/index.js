@@ -22,10 +22,13 @@ const renderingApp = (nodes, i18Instance, state) => (path, value) => {
   switch (path) {
     case 'language':
       interfaceLanguageView(nodes, state, i18Instance);
+      if (state.feeds.length) {
+        feedDataView(nodes, state, i18Instance);
+      }
       break;
     case 'feeds':
     case 'posts':
-      feedDataView(nodes, state);
+      feedDataView(nodes, state, i18Instance);
       break;
     case 'form.status':
       formStatusView(nodes, value, state, i18Instance);
@@ -51,7 +54,7 @@ const app = () => {
   const i18nInstance = i18n.createInstance();
   i18nInstance.init({
     lng: 'ru',
-    debug: false,
+    debug: true,
     resources: {
       en,
       ru,

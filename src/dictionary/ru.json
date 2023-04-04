@@ -13,7 +13,9 @@
       "button": "Добавить",
       "label": "Ссылка RSS",
       "example": "Пример: https://ru.hexlet.io/lessons.rss",
-      "language": "Выбор языка"
+      "language": "Выбор языка",
+      "feedsTitle": "Фиды",
+      "postsTitle": "Посты"
     },
     "network": "Ошибка сети"
   }
