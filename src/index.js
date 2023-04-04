@@ -4,12 +4,12 @@ import { v4 as uuidv4 } from 'uuid';
 import onChange from 'on-change';
 import i18n from 'i18next';
 import getParseData from './actions/getParseData.js';
-import ru from './dictionary/ru.json';
-import en from './dictionary/en.json';
 import getNewPosts from './actions/getNewPosts.js';
 import formStatusView from './view/formStatusView.js';
 import feedDataView from './view/feedDataView.js';
 import { interfaceLanguageView, modalWindowView } from './view/otherView.js';
+import ru from './dictionary/ru.json';
+import en from './dictionary/en.json';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -45,13 +45,6 @@ const formStatuses = {
   idle: 'idle',
 };
 
-const getFormError = (nodes, i18Instance) => {
-  const { feedback, submitButton } = nodes;
-  feedback.textContent = i18Instance.t('network');
-  submitButton.disabled = false;
-  feedback.classList.add('text-danger');
-};
-
 const BASE_URL = 'https://allorigins.hexlet.app';
 
 const proxy = (url) => {
@@ -79,12 +72,11 @@ const addIdToFeedData = (content, linkName) => {
   return { feedData: feedDataWithId, postsData: postDataWithId };
 };
 
-const validationSchema = (watchState, feedsLinks, i18Instance) => {
+const validationSchema = (feedsLinks) => {
   const schema = yup.object({
     url: yup.string()
-      .required()
-      .url()
-      .notOneOf(feedsLinks, i18Instance.t('form.rssExist', { lng: watchState.language })),
+      .url('url')
+      .notOneOf(feedsLinks, 'rssExist'),
   });
 
   const validation = (InitState, link) => schema
@@ -102,13 +94,9 @@ const validationSchema = (watchState, feedsLinks, i18Instance) => {
 };
 
 const renderingApp = (nodes, i18Instance, state) => (path, value) => {
-  console.log(path, value);
   switch (path) {
     case 'language':
       interfaceLanguageView(nodes, state, i18Instance);
-      if (state.feeds.length) {
-        feedDataView(nodes, state, i18Instance);
-      }
       break;
     case 'feeds':
     case 'posts':
@@ -121,7 +109,7 @@ const renderingApp = (nodes, i18Instance, state) => (path, value) => {
       modalWindowView(nodes, state);
       break;
     case 'processError':
-      getFormError(nodes, i18Instance);
+      state.form.errors = 'network';
       break;
     default:
       break;
@@ -170,13 +158,6 @@ const app = () => {
     changeLanguage('ru', watchedState);
   });
 
-  yup.setLocale({
-    string: {
-      required: i18nInstance.t('form.required', { lng: watchedState.language }),
-      url: i18nInstance.t('form.url', { lng: watchedState.language }),
-    },
-  });
-
   const postContaner = elements.posts;
   const modal = document.querySelector('#modal');
 
@@ -189,7 +170,7 @@ const app = () => {
     const linkName = formData.get(elements.input.name).trim();
     const { form, feeds, posts } = watchedState;
     const feedsLinks = watchedState.feeds.map((feed) => feed.linkName);
-    const validation = validationSchema(watchedState, feedsLinks, i18nInstance);
+    const validation = validationSchema(feedsLinks);
 
     validation(watchedState, linkName)
       .then((link) => {
@@ -206,14 +187,14 @@ const app = () => {
             watchedState.processError = null;
           })
           .catch((err) => {
-            form.errors = err.isParsing ? i18nInstance.t('form.badRSS', { lng: watchedState.language }) : i18nInstance.t('network', { lng: watchedState.language });
+            form.errors = err.isParsing ? 'badRSS' : 'network';
             watchedState.form.status = formStatuses.error;
             throw err;
           });
       })
       .catch((err) => {
         form.valid = false;
-        form.errors = err.message;
+        form.errors = err;
         watchedState.form.status = formStatuses.error;
         watchedState.processError = null;
       });
