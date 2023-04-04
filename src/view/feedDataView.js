@@ -1,7 +1,7 @@
-const feedHtml = (data, i18next, watchedState) => (`
+const feedHtml = (data, i18next, language) => (`
     <div class="card border-0">
       <div class="card-body">
-        <h2 class="card-title feeds-title h4">${i18next.t('interface.feedsTitle', { lng: watchedState.language })}</h2>
+        <h2 class="card-title feeds-title h4">${i18next.t('interface.feedsTitle', { lng: language })}</h2>
       </div>
       <ul class="list-group border-0 rounded-0">
         ${data.map((item) => (`
@@ -12,10 +12,10 @@ const feedHtml = (data, i18next, watchedState) => (`
       </ul>
     </div>`);
 
-const postHtml = (data, i18next, watchedState) => (`
+const postHtml = (data, i18next, language) => (`
     <div class="card border-0">
       <div class="card-body">
-        <h2 class="card-title posts-title h4">${i18next.t('interface.postsTitle', { lng: watchedState.language })}</h2>
+        <h2 class="card-title posts-title h4">${i18next.t('interface.postsTitle', { lng: language })}</h2>
       </div>
       <ul class="list-group border-0 rounded-0">
         ${data.map((post) => (`
@@ -34,7 +34,7 @@ const postHtml = (data, i18next, watchedState) => (`
 const feedDataView = (elements, state, i18next) => {
   const { feeds, posts } = elements;
 
-  feeds.innerHTML = feedHtml(state.feeds, i18next, state);
+  feeds.innerHTML = feedHtml(state.feeds, i18next, state.language);
   elements.form.reset();
   elements.input.focus();
 
@@ -45,7 +45,7 @@ const feedDataView = (elements, state, i18next) => {
       currentLink.classList.add('fw-normal', 'link-secondary');
     });
   } else {
-    posts.innerHTML = postHtml(state.posts, i18next, state);
+    posts.innerHTML = postHtml(state.posts, i18next, state.language);
   }
 };
 

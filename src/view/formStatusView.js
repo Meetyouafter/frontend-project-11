@@ -1,12 +1,17 @@
-import { formStatuses } from '../actions/getFeedData.js';
+const formStatuses = {
+  success: 'success',
+  error: 'error',
+  sending: 'sending',
+  idle: 'idle',
+};
 
-const renderSuccess = (elements, i18Instance) => {
+const renderSuccess = (elements, i18Instance, language) => {
   const { feedback, input } = elements;
   input.classList.remove('is-invalid');
   feedback.textContent = '';
   feedback.classList.add('text-success');
   feedback.classList.remove('text-danger');
-  feedback.textContent = i18Instance.t('form.success');
+  feedback.textContent = i18Instance.t('form.success', { lng: language });
 };
 
 const renderErrors = (elements, state) => {
@@ -24,7 +29,7 @@ const formStatusView = (elements, status, state, i18Instance) => {
   const { submitButton } = elements;
   switch (status) {
     case formStatuses.success:
-      renderSuccess(elements, i18Instance);
+      renderSuccess(elements, i18Instance, state.language);
       submitButton.disabled = false;
       state.form.errors = {};
       break;
