@@ -39,7 +39,6 @@ const feedDataView = (elements, state, i18next) => {
   elements.input.focus();
 
   if (state.uiState.visitedPosts.length > 0) {
-    posts.innerHTML = postHtml(state.feeds, i18next, state);
     state.uiState.visitedPosts.forEach((id) => {
       const currentLink = document.querySelector(`a[data-id="${id}"]`);
       currentLink.classList.remove('fw-bold');

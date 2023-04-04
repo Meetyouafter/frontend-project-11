@@ -113,15 +113,6 @@ const getFeedData = (watchedState, i18Instance) => {
   postContaner.addEventListener('click', (e) => {
     const { id } = e.target.dataset;
     const { visitedPosts } = watchedState.uiState;
-
-    const openPost = watchedState.posts.find((post) => post.idItem === id);
-
-    watchedState.uiState.openPostData = {
-      id,
-      title: openPost.title,
-      description: openPost.description,
-      link: openPost.link,
-    };
     visitedPosts.push(id);
   });
 

@@ -19,6 +19,7 @@ const getFormError = (nodes, i18Instance) => {
 };
 
 const renderingApp = (nodes, i18Instance, state) => (path, value) => {
+  console.log(path, value);
   switch (path) {
     case 'language':
       interfaceLanguageView(nodes, state, i18Instance);
@@ -33,7 +34,7 @@ const renderingApp = (nodes, i18Instance, state) => (path, value) => {
     case 'form.status':
       formStatusView(nodes, value, state, i18Instance);
       break;
-    case 'uiState.openPostData':
+    case 'uiState.visitedPosts':
       modalWindowView(nodes, state);
       break;
     case 'processError':
@@ -72,7 +73,6 @@ const app = () => {
     feeds: [],
     posts: [],
     uiState: {
-      openPostData: null,
       visitedPosts: [],
     },
   };
