@@ -11,8 +11,7 @@ const renderSuccess = (elements, i18Instance, state) => {
   feedback.textContent = '';
   feedback.classList.add('text-success');
   feedback.classList.remove('text-danger');
-  state.form.errors = 'success';
-  feedback.textContent = i18Instance.t(`form.${state.form.errors}`, { lng: state.language });
+  feedback.textContent = i18Instance.t('form.success', { lng: state.language });
 };
 
 const renderErrors = (elements, i18Instance, state) => {

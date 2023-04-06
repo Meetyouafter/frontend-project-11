@@ -13,7 +13,7 @@ import en from './dictionary/en.json';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const elements = {
+const getElements = () => ({
   body: document.querySelector('body'),
   form: document.querySelector('.rss-form'),
   input: document.querySelector('.form-control'),
@@ -36,7 +36,9 @@ const elements = {
     example: document.querySelector('.example'),
     language: document.querySelector('.language'),
   },
-};
+});
+
+const elements = getElements();
 
 const formStatuses = {
   success: 'success',
