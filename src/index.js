@@ -13,33 +13,6 @@ import en from './dictionary/en.json';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const getElements = () => ({
-  body: document.querySelector('body'),
-  form: document.querySelector('.rss-form'),
-  input: document.querySelector('.form-control'),
-  submitButton: document.querySelector('[type="submit"]'),
-  buttonEn: document.querySelector('.btn_enLang'),
-  buttonRu: document.querySelector('.btn_ruLang'),
-  feeds: document.querySelector('.feeds'),
-  posts: document.querySelector('.posts'),
-  feedback: document.querySelector('.feedback'),
-  modal: {
-    title: document.querySelector('.modal-title'),
-    description: document.querySelector('.modal-body'),
-    readBtn: document.querySelector('.full-article'),
-  },
-  translate: {
-    description: document.querySelector('.description'),
-    title: document.querySelector('.title'),
-    label: document.querySelector('.label'),
-    button: document.querySelector('.button'),
-    example: document.querySelector('.example'),
-    language: document.querySelector('.language'),
-  },
-});
-
-const elements = getElements();
-
 const formStatuses = {
   success: 'success',
   error: 'error',
@@ -125,6 +98,31 @@ const changeLanguage = (value, state) => {
 };
 
 const app = () => {
+  const elements = {
+    body: document.querySelector('body'),
+    form: document.querySelector('.rss-form'),
+    input: document.querySelector('.form-control'),
+    submitButton: document.querySelector('[type="submit"]'),
+    buttonEn: document.querySelector('.btn_enLang'),
+    buttonRu: document.querySelector('.btn_ruLang'),
+    feeds: document.querySelector('.feeds'),
+    posts: document.querySelector('.posts'),
+    feedback: document.querySelector('.feedback'),
+    modal: {
+      title: document.querySelector('.modal-title'),
+      description: document.querySelector('.modal-body'),
+      readBtn: document.querySelector('.full-article'),
+    },
+    translate: {
+      description: document.querySelector('.description'),
+      title: document.querySelector('.title'),
+      label: document.querySelector('.label'),
+      button: document.querySelector('.button'),
+      example: document.querySelector('.example'),
+      language: document.querySelector('.language'),
+    },
+  };
+
   const i18nInstance = i18n.createInstance();
   i18nInstance.init({
     lng: 'ru',
