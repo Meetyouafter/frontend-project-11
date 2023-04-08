@@ -166,15 +166,12 @@ const app = () => {
     watchedState.form.status = formStatuses.sending;
     const formData = new FormData(e.target);
     const linkName = formData.get(elements.input.name).trim();
-    const { form, feeds, posts } = watchedState;
+    const { feeds, posts } = watchedState;
     const feedsLinks = watchedState.feeds.map((feed) => feed.linkName);
     const validation = validationSchema(feedsLinks);
 
     validation(watchedState, linkName)
-      .then(({ url }) => {
-        watchedState.form.errors = false;
-        return Promise.resolve(url);
-      })
+      .then(({ url }) => Promise.resolve(url))
       .then((link) => {
         axios({
           url: proxy(link),
@@ -185,17 +182,19 @@ const app = () => {
             posts.unshift(...postsData);
             feeds.unshift(feedData);
             watchedState.form.status = formStatuses.success;
+            watchedState.form.errors = false;
             watchedState.processError = null;
+            watchedState.form.valid = true;
           })
           .catch((err) => {
-            form.errors = err.isParsing ? 'badRSS' : 'network';
+            watchedState.form.errors = err.isParsing ? 'badRSS' : 'network';
             watchedState.form.status = formStatuses.error;
             throw err;
           });
       })
       .catch((err) => {
-        form.valid = false;
-        form.errors = err;
+        watchedState.form.valid = false;
+        watchedState.form.errors = err;
         watchedState.form.status = formStatuses.error;
         watchedState.processError = null;
       });
