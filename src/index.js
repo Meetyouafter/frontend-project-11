@@ -54,13 +54,8 @@ const validationSchema = (feedsLinks) => {
       .notOneOf(feedsLinks, 'rssExist'),
   });
 
-  const validation = (InitState, link) => schema
+  const validation = (initState, link) => schema
     .validate({ url: link }, { abortEarly: false })
-    .then(({ url }) => {
-      InitState.form.errors = {};
-
-      return Promise.resolve(url);
-    })
     .catch((err) => {
       throw err;
     });
@@ -103,8 +98,7 @@ const app = () => {
     form: document.querySelector('.rss-form'),
     input: document.querySelector('.form-control'),
     submitButton: document.querySelector('[type="submit"]'),
-    buttonEn: document.querySelector('.btn_enLang'),
-    buttonRu: document.querySelector('.btn_ruLang'),
+    languages: document.querySelector('.language_container'),
     feeds: document.querySelector('.feeds'),
     posts: document.querySelector('.posts'),
     feedback: document.querySelector('.feedback'),
@@ -150,29 +144,37 @@ const app = () => {
 
   const watchedState = observationAppState(state, elements, i18nInstance);
 
-  elements.buttonEn.addEventListener('click', () => {
-    changeLanguage('en', watchedState);
-  });
+  elements.languages.addEventListener('click', (e) => {
+    const language = e.target.dataset.lng;
 
-  elements.buttonRu.addEventListener('click', () => {
-    changeLanguage('ru', watchedState);
+    switch (language) {
+      case 'en':
+        changeLanguage('en', watchedState);
+        break;
+      case 'ru':
+        changeLanguage('ru', watchedState);
+        break;
+      default:
+        break;
+    }
   });
 
   const postContaner = elements.posts;
-  const modal = document.querySelector('#modal');
 
-  elements.form.addEventListener('submit', (evt) => {
-    evt.preventDefault();
+  elements.form.addEventListener('submit', (e) => {
+    e.preventDefault();
     watchedState.form.status = formStatuses.sending;
-    watchedState.processError = null;
-
-    const formData = new FormData(evt.target);
+    const formData = new FormData(e.target);
     const linkName = formData.get(elements.input.name).trim();
     const { form, feeds, posts } = watchedState;
     const feedsLinks = watchedState.feeds.map((feed) => feed.linkName);
     const validation = validationSchema(feedsLinks);
 
     validation(watchedState, linkName)
+      .then(({ url }) => {
+        watchedState.form.errors = false;
+        return Promise.resolve(url);
+      })
       .then((link) => {
         axios({
           url: proxy(link),
@@ -182,7 +184,6 @@ const app = () => {
             const { feedData, postsData } = data;
             posts.unshift(...postsData);
             feeds.unshift(feedData);
-            feedsLinks.push(link);
             watchedState.form.status = formStatuses.success;
             watchedState.processError = null;
           })
@@ -204,12 +205,6 @@ const app = () => {
     const { id } = e.target.dataset;
     const { visitedPosts } = watchedState.uiState;
     visitedPosts.push(id);
-  });
-
-  modal.addEventListener('click', (e) => {
-    if (e.target.dataset.bsDismiss === 'modal') {
-      watchedState.uiState.openPostData = null;
-    }
   });
 
   getNewPosts(watchedState);
