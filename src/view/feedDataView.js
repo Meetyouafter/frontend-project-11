@@ -26,7 +26,7 @@ const postHtml = (data, i18next, language) => (`
             ${DOMPurify.sanitize(post.title)}
           </a>
           <button type="button" class="btn btn-outline-primary btn-sm" data-id="${post.idItem}" data-bs-toggle="modal" data-bs-target="#modal">
-            Просмотр
+            ${i18next.t('interface.postsButton', { lng: language })}
           </button>
         </li>
       `)).join('')}

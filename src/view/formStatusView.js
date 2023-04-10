@@ -15,7 +15,7 @@ const renderSuccess = (elements, i18Instance, state) => {
 };
 
 const renderErrors = (elements, i18Instance, state) => {
-  if (state.processError === null) {
+  if (state.form.errors) {
     const { feedback, input } = elements;
     feedback.textContent = '';
     input.classList.add('is-invalid');

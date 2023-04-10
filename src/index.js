@@ -78,9 +78,6 @@ const renderingApp = (nodes, i18Instance, state) => (path, value) => {
     case 'uiState.visitedPosts':
       modalWindowView(nodes, state);
       break;
-    case 'processError':
-      state.form.errors = 'network';
-      break;
     default:
       break;
   }
@@ -128,7 +125,6 @@ const app = () => {
   });
 
   const state = {
-    processError: null,
     language: 'ru',
     form: {
       valid: false,
@@ -171,10 +167,9 @@ const app = () => {
     const validation = validationSchema(feedsLinks);
 
     validation(watchedState, linkName)
-      .then(({ url }) => Promise.resolve(url))
-      .then((link) => {
+      .then(({ url }) => {
         axios({
-          url: proxy(link),
+          url: proxy(url),
         })
           .then((response) => {
             const data = addIdToFeedData(response.data.contents, linkName);
@@ -183,7 +178,6 @@ const app = () => {
             feeds.unshift(feedData);
             watchedState.form.status = formStatuses.success;
             watchedState.form.errors = false;
-            watchedState.processError = null;
             watchedState.form.valid = true;
           })
           .catch((err) => {
@@ -196,7 +190,6 @@ const app = () => {
         watchedState.form.valid = false;
         watchedState.form.errors = err;
         watchedState.form.status = formStatuses.error;
-        watchedState.processError = null;
       });
   });
 

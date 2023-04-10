@@ -16,7 +16,8 @@
       "example": "Пример: https://ru.hexlet.io/lessons.rss",
       "language": "Выбор языка",
       "feedsTitle": "Фиды",
-      "postsTitle": "Посты"
+      "postsTitle": "Посты",
+      "postsButton": "Просмотр"
     }
   }
 }  
